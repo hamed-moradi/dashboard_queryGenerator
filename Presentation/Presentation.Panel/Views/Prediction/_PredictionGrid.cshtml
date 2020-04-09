@@ -1,0 +1,45 @@
+﻿@using Presentation.Panel.Models;
+@using Presentation.Panel.Helpers;
+@using Asset.Infrastructure.Common;
+@model IEnumerable<PredictionViewModel>
+
+<table class="table AdvancedGrid treeview">
+    <tr>
+        <th></th>
+        <th>@Html.DisplayNameFor(model => model.UserName)</th>
+        <th>@Html.DisplayNameFor(model => model.MatchTitle)</th>
+        <th>@Html.DisplayNameFor(model => model.HomeClubName)</th>
+        <th>@Html.DisplayNameFor(model => model.HomeClubScore)</th>
+        <th>@Html.DisplayNameFor(model => model.AwayClubScore)</th>
+        <th>@Html.DisplayNameFor(model => model.AwayClubName)</th>
+        <th>@Html.DisplayNameFor(model => model.UserPoint)</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @{
+                    var original = string.IsNullOrWhiteSpace(item.MatchImage) ? "" : item.MatchImage.Trim();
+                    if (string.IsNullOrWhiteSpace(original))
+                    {
+                        original = "/Images/no-image.png";
+                    }
+                    var src = original + "?w=36&h=36&mode=crop";
+                }
+                <a href="@original" target="_blank" title="مشاهده تصویر در ابعاد واقعی">
+                    <img class="avatar-mini" src="@src" width="35" height="35" alt="" />
+                </a>
+            </td>
+            <td>@Html.DisplayFor(modelItem => item.UserName)</td>
+            <td>@Html.DisplayFor(modelItem => item.MatchTitle)</td>
+            <td>@Html.DisplayFor(modelItem => item.HomeClubName)</td>
+            <td>@Html.DisplayFor(modelItem => item.HomeClubScore)</td>
+            <td>@Html.DisplayFor(modelItem => item.AwayClubScore)</td>
+            <td>@Html.DisplayFor(modelItem => item.AwayClubName)</td>
+            <td>@Html.DisplayFor(modelItem => item.UserPoint)</td>
+        </tr>
+    }
+</table>
+@Html.Partial("_PagedListPager", Model)

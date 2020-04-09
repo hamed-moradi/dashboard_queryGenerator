@@ -1,0 +1,139 @@
+﻿@using Asset.Infrastructure.Common
+@using Presentation.Panel.Models;
+@model ModuleViewModel
+
+@{
+    ViewBag.Title = "تعریف ماژول جدید";
+}
+
+<section class="content">
+    <hr />
+    @using (Html.BeginForm("Create", "Module", FormMethod.Post, new { @id = "module" }))
+    {
+        @Html.AntiForgeryToken()
+        <input type="hidden" id="HttpMethod" name="HttpMethod" />
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })@Html.HiddenFor(model => model.PreviousUrl)
+            <div class="form-group">
+                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-5">
+                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, htmlAttributes: new {@class = "control-label col-md-2"})
+                <div class="col-md-5">
+                    @Html.EditorFor(model => model.Description, new {htmlAttributes = new {@class = "form-control"}})
+                    @Html.ValidationMessageFor(model => model.Description, "", new {@class = "text-danger"})
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Icon, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-5">
+                    @*@Html.EditorFor(model => model.Icon, new { htmlAttributes = new { @class = "form-control dirl" } })*@
+                    <select name="Icon" id="Icon" class="form-control dirl">
+                          
+                    </select>
+                    @Html.ValidationMessageFor(model => model.Icon, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.HttpMethod, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-5">
+                    <select class="form-control select2" name="mHttpMethod" id="mHttpMethod" multiple="multiple" data-placeholder="یک یا چند متد را انتخاب کنید" style="width: 100%;">
+                        <option value="GET">GET</option>
+                        <option value="POST">POST</option>
+                        <option value="PUT">PUT</option>
+                        <option value="DELETE">DELETE</option>
+                    </select>
+                    @Html.ValidationMessageFor(model => model.HttpMethod, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Path, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-5">
+                    @Html.EditorFor(model => model.Path, new { htmlAttributes = new { @class = "form-control text-left" , style = "direction:ltr" } })
+                    @Html.ValidationMessageFor(model => model.Path, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Category, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-5">
+                    @Html.DropDownListFor(model => model.Category, EnumHelper.GetSelectList(typeof(GeneralEnums.ModuleCategory)), "یک گروه را انتخاب کنید", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Priority, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-5">
+                    @Html.EditorFor(model => model.Priority, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Priority, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-5">
+                    @Html.DropDownListFor(model => model.Status,EnumHelper.GetSelectList(typeof(EditStatus)),"یک وضعیت را انتخاب کنید",new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ParentId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-5">
+                    @Html.DropDownListFor(model => model.ParentId, (SelectList)ViewBag.ParentsList, "-- بالاسری --", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ParentId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="ذخیره مشخصات" class="btn btn-primary" />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    @if (string.IsNullOrEmpty(Model.PreviousUrl))
+                    {
+                        @Html.ActionLink("لیست ماژول ها", "Index", null, new { @class = "btn btn-default" })
+                    }
+                    else
+                    {
+                        <a href="@Model.PreviousUrl" class="btn btn-default">لیست مسابقه ها</a>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+    @section cssBegin{
+        <link rel="stylesheet" href="/Styles/select2.full.min.js">
+    }
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+        <script src="/Scripts/select2.full.min.js"></script>
+        <script>
+            $(function () {
+                $(".select2").select2();
+            });
+            jQuery('form#module').submit(function (e) {
+                var methods = $("#mHttpMethod").val();
+                selectedMethods = '';
+                if (methods != null) {
+                    for (var i = 0 ; i < methods.length; i++) {
+                        if (i != 0) {
+                            selectedMethods += ',';
+                        }
+                        selectedMethods += methods[i];
+                    }
+                }
+
+                $('#HttpMethod').val(selectedMethods);
+            });
+        </script>
+    }
+</section>

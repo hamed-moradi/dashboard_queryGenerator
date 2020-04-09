@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Title = "مدیریت فایل ها";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Scripts {
+    <script type="text/javascript">
+        var top = $('#preview').css('top');
+        var heigth = window.innerHeight;
+        $('#preview').innerHeight=heigth - top;
+    </script>
+}
+
+<iframe id="preview" src="~/fileman/index.html" frameborder="0" width="100%" height="720"></iframe>

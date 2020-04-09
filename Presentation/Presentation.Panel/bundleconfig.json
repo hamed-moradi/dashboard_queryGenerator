@@ -1,0 +1,500 @@
+[
+  {
+    "outputFileName": "plugins/bootstrap/css/bootstrap.min.css",
+    "inputFiles": [
+      "plugins/bootstrap/css/bootstrap.css"
+    ]
+  },
+  {
+    "outputFileName": "plugins/bootstrap/js/bootstrap.min.js",
+    "inputFiles": [
+      "plugins/bootstrap/js/bootstrap.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/bootstrap-slider/bootstrap-slider.min.js",
+    "inputFiles": [
+      "plugins/bootstrap-slider/bootstrap-slider.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/bootstrap-slider/slider.min.css",
+    "inputFiles": [
+      "plugins/bootstrap-slider/slider.css"
+    ]
+  },
+  {
+    "outputFileName": "plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js",
+    "inputFiles": [
+      "plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css",
+    "inputFiles": [
+      "plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.css"
+    ]
+  },
+  {
+    "outputFileName": "plugins/chartjs/Chart.min.js",
+    "inputFiles": [
+      "plugins/chartjs/Chart.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/colorpicker/bootstrap-colorpicker.min.css",
+    "inputFiles": [
+      "plugins/colorpicker/bootstrap-colorpicker.css"
+    ]
+  },
+  {
+    "outputFileName": "plugins/colorpicker/bootstrap-colorpicker.min.js",
+    "inputFiles": [
+      "plugins/colorpicker/bootstrap-colorpicker.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/datatables/dataTables.bootstrap.min.css",
+    "inputFiles": [
+      "plugins/datatables/dataTables.bootstrap.css"
+    ]
+  },
+  {
+    "outputFileName": "plugins/datatables/dataTables.bootstrap.min.js",
+    "inputFiles": [
+      "plugins/datatables/dataTables.bootstrap.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/datatables/jquery.dataTables.min.css",
+    "inputFiles": [
+      "plugins/datatables/jquery.dataTables.css"
+    ]
+  },
+  {
+    "outputFileName": "plugins/datatables/jquery.dataTables.min.js",
+    "inputFiles": [
+      "plugins/datatables/jquery.dataTables.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/datatables/jquery.dataTables_themeroller.min.css",
+    "inputFiles": [
+      "plugins/datatables/jquery.dataTables_themeroller.css"
+    ]
+  },
+  {
+    "outputFileName": "plugins/daterangepicker/daterangepicker-bs3.min.css",
+    "inputFiles": [
+      "plugins/daterangepicker/daterangepicker-bs3.css"
+    ]
+  },
+  {
+    "outputFileName": "plugins/daterangepicker/daterangepicker.min.js",
+    "inputFiles": [
+      "plugins/daterangepicker/daterangepicker.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/datepicker/bootstrap-datepicker.min.js",
+    "inputFiles": [
+      "plugins/datepicker/bootstrap-datepicker.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/datepicker/datepicker3.min.css",
+    "inputFiles": [
+      "plugins/datepicker/datepicker3.css"
+    ]
+  },
+  {
+    "outputFileName": "plugins/fastclick/fastclick.min.js",
+    "inputFiles": [
+      "plugins/fastclick/fastclick.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/flot/excanvas.min.js",
+    "inputFiles": [
+      "plugins/flot/excanvas.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/flot/jquery.colorhelpers.min.js",
+    "inputFiles": [
+      "plugins/flot/jquery.colorhelpers.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/flot/jquery.flot.canvas.min.js",
+    "inputFiles": [
+      "plugins/flot/jquery.flot.canvas.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/flot/jquery.flot.categories.min.js",
+    "inputFiles": [
+      "plugins/flot/jquery.flot.categories.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/flot/jquery.flot.crosshair.min.js",
+    "inputFiles": [
+      "plugins/flot/jquery.flot.crosshair.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/flot/jquery.flot.errorbars.min.js",
+    "inputFiles": [
+      "plugins/flot/jquery.flot.errorbars.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/flot/jquery.flot.fillbetween.min.js",
+    "inputFiles": [
+      "plugins/flot/jquery.flot.fillbetween.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/flot/jquery.flot.image.min.js",
+    "inputFiles": [
+      "plugins/flot/jquery.flot.image.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/flot/jquery.flot.min.js",
+    "inputFiles": [
+      "plugins/flot/jquery.flot.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/flot/jquery.flot.navigate.min.js",
+    "inputFiles": [
+      "plugins/flot/jquery.flot.navigate.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/flot/jquery.flot.pie.min.js",
+    "inputFiles": [
+      "plugins/flot/jquery.flot.pie.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/flot/jquery.flot.resize.min.js",
+    "inputFiles": [
+      "plugins/flot/jquery.flot.resize.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/flot/jquery.flot.selection.min.js",
+    "inputFiles": [
+      "plugins/flot/jquery.flot.selection.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/flot/jquery.flot.stack.min.js",
+    "inputFiles": [
+      "plugins/flot/jquery.flot.stack.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/flot/jquery.flot.symbol.min.js",
+    "inputFiles": [
+      "plugins/flot/jquery.flot.symbol.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/flot/jquery.flot.threshold.min.js",
+    "inputFiles": [
+      "plugins/flot/jquery.flot.threshold.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/flot/jquery.flot.time.min.js",
+    "inputFiles": [
+      "plugins/flot/jquery.flot.time.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/morris/morris.min.js",
+    "inputFiles": [
+      "plugins/morris/morris.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/timepicker/bootstrap-timepicker.min.css",
+    "inputFiles": [
+      "plugins/timepicker/bootstrap-timepicker.css"
+    ]
+  },
+  {
+    "outputFileName": "plugins/timepicker/bootstrap-timepicker.min.js",
+    "inputFiles": [
+      "plugins/timepicker/bootstrap-timepicker.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/sparkline/jquery.sparkline.min.js",
+    "inputFiles": [
+      "plugins/sparkline/jquery.sparkline.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/slimScroll/jquery.slimscroll.min.js",
+    "inputFiles": [
+      "plugins/slimScroll/jquery.slimscroll.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/select2/select2.min.css",
+    "inputFiles": [
+      "plugins/select2/select2.css"
+    ]
+  },
+  {
+    "outputFileName": "plugins/select2/select2.full.min.js",
+    "inputFiles": [
+      "plugins/select2/select2.full.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/select2/select2.min.js",
+    "inputFiles": [
+      "plugins/select2/select2.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/knob/jquery.knob.min.js",
+    "inputFiles": [
+      "plugins/knob/jquery.knob.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/jvectormap/jquery-jvectormap-1.2.2.min.css",
+    "inputFiles": [
+      "plugins/jvectormap/jquery-jvectormap-1.2.2.css"
+    ]
+  },
+  {
+    "outputFileName": "plugins/jQueryUI/jquery-ui.min.js",
+    "inputFiles": [
+      "plugins/jQueryUI/jquery-ui.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/ionslider/ion.rangeSlider.min.css",
+    "inputFiles": [
+      "plugins/ionslider/ion.rangeSlider.css"
+    ]
+  },
+  {
+    "outputFileName": "plugins/ionslider/ion.rangeSlider.skinFlat.min.css",
+    "inputFiles": [
+      "plugins/ionslider/ion.rangeSlider.skinFlat.css"
+    ]
+  },
+  {
+    "outputFileName": "plugins/ionslider/ion.rangeSlider.skinNice.min.css",
+    "inputFiles": [
+      "plugins/ionslider/ion.rangeSlider.skinNice.css"
+    ]
+  },
+  {
+    "outputFileName": "plugins/input-mask/jquery.inputmask.date.extensions.min.js",
+    "inputFiles": [
+      "plugins/input-mask/jquery.inputmask.date.extensions.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/input-mask/jquery.inputmask.extensions.min.js",
+    "inputFiles": [
+      "plugins/input-mask/jquery.inputmask.extensions.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/input-mask/jquery.inputmask.min.js",
+    "inputFiles": [
+      "plugins/input-mask/jquery.inputmask.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/input-mask/jquery.inputmask.phone.extensions.min.js",
+    "inputFiles": [
+      "plugins/input-mask/jquery.inputmask.phone.extensions.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/input-mask/jquery.inputmask.numeric.extensions.min.js",
+    "inputFiles": [
+      "plugins/input-mask/jquery.inputmask.numeric.extensions.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/input-mask/jquery.inputmask.regex.extensions.min.js",
+    "inputFiles": [
+      "plugins/input-mask/jquery.inputmask.regex.extensions.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/iCheck/icheck.min.js",
+    "inputFiles": [
+      "plugins/iCheck/icheck.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/fullcalendar/fullcalendar.min.css",
+    "inputFiles": [
+      "plugins/fullcalendar/fullcalendar.css"
+    ]
+  },
+  {
+    "outputFileName": "plugins/fullcalendar/fullcalendar.min.js",
+    "inputFiles": [
+      "plugins/fullcalendar/fullcalendar.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/fullcalendar/fullcalendar.print.min.css",
+    "inputFiles": [
+      "plugins/fullcalendar/fullcalendar.print.css"
+    ]
+  },
+  {
+    "outputFileName": "plugins/MdBootstrapPersianDateTimePicker/jquery.Bootstrap-PersianDateTimePicker.min.css",
+    "inputFiles": [
+      "plugins/MdBootstrapPersianDateTimePicker/jquery.Bootstrap-PersianDateTimePicker.css"
+    ]
+  },
+  {
+    "outputFileName": "plugins/MdBootstrapPersianDateTimePicker/jalaali.min.js",
+    "inputFiles": [
+      "plugins/MdBootstrapPersianDateTimePicker/jalaali.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/MdBootstrapPersianDateTimePicker/jquery.Bootstrap-PersianDateTimePicker.min.js",
+    "inputFiles": [
+      "plugins/MdBootstrapPersianDateTimePicker/jquery.Bootstrap-PersianDateTimePicker.js"
+    ]
+  },
+  {
+    "outputFileName": "dist/css/bootstrap-theme.min.css",
+    "inputFiles": [
+      "dist/css/bootstrap-theme.css"
+    ]
+  },
+  {
+    "outputFileName": "dist/css/AdminLTE.min.css",
+    "inputFiles": [
+      "dist/css/AdminLTE.css"
+    ]
+  },
+  {
+    "outputFileName": "dist/css/skins/_all-skins.min.css",
+    "inputFiles": [
+      "dist/css/skins/_all-skins.css"
+    ]
+  },
+  {
+    "outputFileName": "dist/css/skins/skin-black-light.min.css",
+    "inputFiles": [
+      "dist/css/skins/skin-black-light.css"
+    ]
+  },
+  {
+    "outputFileName": "dist/css/skins/skin-black.min.css",
+    "inputFiles": [
+      "dist/css/skins/skin-black.css"
+    ]
+  },
+  {
+    "outputFileName": "dist/css/skins/skin-blue-light.min.css",
+    "inputFiles": [
+      "dist/css/skins/skin-blue-light.css"
+    ]
+  },
+  {
+    "outputFileName": "dist/css/skins/skin-blue.min.css",
+    "inputFiles": [
+      "dist/css/skins/skin-blue.css"
+    ]
+  },
+  {
+    "outputFileName": "dist/css/skins/skin-green-light.min.css",
+    "inputFiles": [
+      "dist/css/skins/skin-green-light.css"
+    ]
+  },
+  {
+    "outputFileName": "dist/css/skins/skin-green.min.css",
+    "inputFiles": [
+      "dist/css/skins/skin-green.css"
+    ]
+  },
+  {
+    "outputFileName": "dist/css/skins/skin-purple-light.min.css",
+    "inputFiles": [
+      "dist/css/skins/skin-purple-light.css"
+    ]
+  },
+  {
+    "outputFileName": "dist/css/skins/skin-purple.min.css",
+    "inputFiles": [
+      "dist/css/skins/skin-purple.css"
+    ]
+  },
+  {
+    "outputFileName": "dist/css/skins/skin-red-light.min.css",
+    "inputFiles": [
+      "dist/css/skins/skin-red-light.css"
+    ]
+  },
+  {
+    "outputFileName": "dist/css/skins/skin-red.min.css",
+    "inputFiles": [
+      "dist/css/skins/skin-red.css"
+    ]
+  },
+  {
+    "outputFileName": "dist/css/skins/skin-yellow-light.min.css",
+    "inputFiles": [
+      "dist/css/skins/skin-yellow-light.css"
+    ]
+  },
+  {
+    "outputFileName": "dist/css/skins/skin-yellow.min.css",
+    "inputFiles": [
+      "dist/css/skins/skin-yellow.css"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/LayoutFunctions.min.js",
+    "inputFiles": [
+      "Scripts/LayoutFunctions.js"
+    ]
+  },
+  {
+    "outputFileName": "plugins/iCheck/flat/blue.min.css",
+    "inputFiles": [
+      "plugins/iCheck/flat/blue.css"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/MdBootstrapPersianDateTimePicker/jalaali.min.js",
+    "inputFiles": [
+      "Scripts/MdBootstrapPersianDateTimePicker/jalaali.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/MdBootstrapPersianDateTimePicker/jquery.Bootstrap-PersianDateTimePicker.min.js",
+    "inputFiles": [
+      "Scripts/MdBootstrapPersianDateTimePicker/jquery.Bootstrap-PersianDateTimePicker.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/contents.min.js",
+    "inputFiles": [
+      "Scripts/contents.js"
+    ]
+  }
+]

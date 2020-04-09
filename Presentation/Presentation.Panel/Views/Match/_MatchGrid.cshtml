@@ -1,0 +1,54 @@
+﻿@using Presentation.Panel.Models;
+@using Presentation.Panel.Helpers;
+@using Asset.Infrastructure.Common;
+@model IEnumerable<MatchViewModel>
+
+<table class="table AdvancedGrid treeview">
+    <tr>
+        <th></th>
+        <th>@Html.DisplayNameFor(model => model.Title)</th>
+        <th>@Html.DisplayNameFor(model => model.Description)</th>
+        <th>@Html.DisplayNameFor(model => model.EventTitle)</th>
+        <th>@Html.DisplayNameFor(model => model.GroupTitle)</th>
+        <th>@Html.DisplayNameFor(model => model.PredictionWeight)</th>
+        <th>@Html.DisplayNameFor(model => model.OccurrenceDate)</th>
+        <th>@Html.DisplayNameFor(model => model.PredictionDeadline)</th>
+        <th>@Html.DisplayNameFor(model => model.StatusTitleForIndex)</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @{
+                    var original = string.IsNullOrWhiteSpace(item.Image) ? "" : item.Image.Trim();
+                    if (string.IsNullOrWhiteSpace(original))
+                    {
+
+                        original = "/Images/no-image.png";
+                    }
+
+                    var src = original + "?w=36&h=36&mode=crop";
+                }
+                <a href="@original" target="_blank" title="مشاهده تصویر در ابعاد واقعی">
+                    <img class="avatar-mini" src="@src" width="35" height="35" alt="" />
+                </a>
+            </td>
+            <td>@Html.DisplayFor(modelItem => item.Title)</td>
+            <td>@Html.DisplayFor(modelItem => item.Description)</td>
+            <td>@Html.DisplayFor(modelItem => item.EventTitle)</td>
+            <td>@Html.DisplayFor(modelItem => item.GroupTitle)</td>
+            <td>@Html.DisplayFor(modelItem => item.PredictionWeight)</td>
+            <td>@Html.DisplayFor(modelItem => item.OccurrenceDate)</td>
+            <td>@Html.DisplayFor(modelItem => item.PredictionDeadline)</td>
+            <td>@Html.DisplayFor(modelItem => item.StatusTitleForIndex)</td>
+            <td>
+                @Html.ActionLink("ویرایش", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("جزئیات", "Details", new { id = item.Id }) |
+                <a href="/Match2Club/SetScore?matchId=@item.Id">ثبت امتیاز</a>
+            </td>
+        </tr>
+                    }
+</table>
+@Html.Partial("_PagedListPager", Model)

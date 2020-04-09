@@ -1,0 +1,25 @@
+﻿@using Presentation.Panel.Models;
+@model IEnumerable<FacilityRequestViewModel>
+<table class="table table-bordered table-hover">
+ 
+    <tr>
+        <th>نام</th>
+        <th>نام خانوادگی</th>
+        <th>تاریخ ایجاد</th>
+ 
+        <th>جزئیات</th>
+    </tr>
+        @{ 
+            foreach(var item in Model)
+            {
+                <tr>
+                    <td>@item.CustomerFirstName</td>
+                    <td>@item.CustomerLastName</td>
+                    <td>@item.CreatedAt</td>
+              
+                    <td>@Html.ActionLink("جزئیات", "Details", "FacilityRequest",new {id=item.Id },null)</td>
+                </tr>
+            }
+        }
+   
+</table>

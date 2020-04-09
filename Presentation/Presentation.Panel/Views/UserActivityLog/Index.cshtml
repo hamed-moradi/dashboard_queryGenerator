@@ -1,0 +1,103 @@
+﻿@using Presentation.Panel.Models;
+@using Presentation.Panel.Helpers;
+@using PagedList;
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "زمان فعالیت کاربران";
+    var entries = ViewBag.OnePageOfEntries as StaticPagedList<UserActivityLogViewModel>;
+    var searchModel = ViewBag.SearchModel as UserActivityLogViewModel;
+}
+
+<!-- Main content -->
+<section class="content">
+    <br /><br />
+    @*---- Advanced Grid View Elements Begin ----*@
+    <div class="box box-default collapsed-box" id="AdvancedSearchBox">
+        <div class="box-header with-border">
+            <h3 class="box-title">جستجوی پیشرفته</h3>
+            <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+            </div>
+        </div>
+        <div class="box-body collapse">
+            @using (Html.BeginForm("Index", "UserActivityLog", FormMethod.Post, new { id = "AdvancedSearchForm" }))
+            {
+                <input type="hidden" id="ThisPageIndex" name="ThisPageIndex" value="@entries.PageNumber" />
+                <input type="hidden" id="PageOrder" name="PageOrder" value="@searchModel.PageOrder" />
+                <input type="hidden" id="PageOrderBy" name="PageOrderBy" value="@searchModel.PageOrderBy" />
+                @Html.Raw(HtmlHelpers.Instance.MakeSearchForm(searchModel))
+            }
+        </div>
+    </div>
+    @*---- Advanced Grid View Elements End ----*@
+    <br />
+    <table class="table admins AdvancedGrid">
+        @{
+            var first = new UserActivityLogViewModel();
+        }
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => first.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => first.Controller)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => first.Action)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => first.StartedAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => first.SpentTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => first.CreatedAt)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in entries)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Controller)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Action)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartedAt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SpentTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedAt)
+                </td>
+                <td>
+                    @Html.ActionLink("جزئیات", "Details", new { id = item.Id })
+                </td>
+            </tr>
+        }
+
+    </table>
+    <div class="jsPager">
+        @Html.PagedListPager(entries, page => Url.Action("Index", new { pageIndex = page }))
+    </div>
+    @*---- Advanced Grid View Elements Begin ----*@
+    @section cssEnd{
+        @Styles.Render("~/bundles/GridCss")
+    }
+    @section scripts{
+        @Scripts.Render("~/bundles/GridScripts")
+        <script>
+            $('.AdvancedGrid th label[for*="@searchModel.PageOrderBy"]').parent().addClass('@searchModel.PageOrder.ToLower()');
+        </script>
+    }
+    @*---- Advanced Grid View Elements End ----*@
+</section>

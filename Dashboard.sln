@@ -1,0 +1,90 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Asset", "Asset", "{474D0823-BC2A-44B5-9D11-59A8C2DC4812}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{778DC33E-5E74-424C-B8E4-31513AFFED3B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{1DAE79E9-1637-4FAA-97EC-2448D393762A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{DF444CF1-9A60-4504-B791-8EA2782155B2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Asset.Infrastructure", "Asset\Asset.Infrastructure\Asset.Infrastructure.csproj", "{195D507B-0D13-41AE-A1AA-30D97C57DD2D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain.Application", "Domain\Domain.Application\Domain.Application.csproj", "{51544472-E7AF-4B62-B268-CFAF0F58C335}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain.Model", "Domain\Domain.Model\Domain.Model.csproj", "{9DAFEE5B-95C1-4119-A757-EFD56D93CD90}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation.Panel", "Presentation\Presentation.Panel\Presentation.Panel.csproj", "{ABB8DA7B-B2E4-47A0-B554-0B6938983C18}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Logic", "Test\Test.Logic\Test.Logic.csproj", "{46EBEE11-9979-47A6-86B5-E5C18936B42A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{195D507B-0D13-41AE-A1AA-30D97C57DD2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{195D507B-0D13-41AE-A1AA-30D97C57DD2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{195D507B-0D13-41AE-A1AA-30D97C57DD2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{195D507B-0D13-41AE-A1AA-30D97C57DD2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51544472-E7AF-4B62-B268-CFAF0F58C335}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51544472-E7AF-4B62-B268-CFAF0F58C335}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51544472-E7AF-4B62-B268-CFAF0F58C335}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51544472-E7AF-4B62-B268-CFAF0F58C335}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DAFEE5B-95C1-4119-A757-EFD56D93CD90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DAFEE5B-95C1-4119-A757-EFD56D93CD90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DAFEE5B-95C1-4119-A757-EFD56D93CD90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DAFEE5B-95C1-4119-A757-EFD56D93CD90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABB8DA7B-B2E4-47A0-B554-0B6938983C18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABB8DA7B-B2E4-47A0-B554-0B6938983C18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABB8DA7B-B2E4-47A0-B554-0B6938983C18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABB8DA7B-B2E4-47A0-B554-0B6938983C18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46EBEE11-9979-47A6-86B5-E5C18936B42A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46EBEE11-9979-47A6-86B5-E5C18936B42A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46EBEE11-9979-47A6-86B5-E5C18936B42A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46EBEE11-9979-47A6-86B5-E5C18936B42A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{195D507B-0D13-41AE-A1AA-30D97C57DD2D} = {474D0823-BC2A-44B5-9D11-59A8C2DC4812}
+		{51544472-E7AF-4B62-B268-CFAF0F58C335} = {778DC33E-5E74-424C-B8E4-31513AFFED3B}
+		{9DAFEE5B-95C1-4119-A757-EFD56D93CD90} = {778DC33E-5E74-424C-B8E4-31513AFFED3B}
+		{ABB8DA7B-B2E4-47A0-B554-0B6938983C18} = {1DAE79E9-1637-4FAA-97EC-2448D393762A}
+		{46EBEE11-9979-47A6-86B5-E5C18936B42A} = {DF444CF1-9A60-4504-B791-8EA2782155B2}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A4FB36C0-445E-4D63-82D6-35173D3063C2}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 6
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://source-ctrl:8080/tfs/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Domain\\Domain.Application\\Domain.Application.csproj
+		SccProjectTopLevelParentUniqueName1 = FastFix.sln
+		SccProjectName1 = Domain/Domain.Application
+		SccLocalPath1 = Domain\\Domain.Application
+		SccProjectUniqueName2 = Presentation\\Presentation.Panel\\Presentation.Panel.csproj
+		SccProjectTopLevelParentUniqueName2 = FastFix.sln
+		SccProjectName2 = Presentation/Presentation.Panel
+		SccLocalPath2 = Presentation\\Presentation.Panel
+		SccProjectUniqueName3 = Domain\\Domain.Model\\Domain.Model.csproj
+		SccProjectTopLevelParentUniqueName3 = FastFix.sln
+		SccProjectName3 = Domain/Domain.Model
+		SccLocalPath3 = Domain\\Domain.Model
+		SccProjectUniqueName4 = Asset\\Asset.Infrastructure\\Asset.Infrastructure.csproj
+		SccProjectTopLevelParentUniqueName4 = FastFix.sln
+		SccProjectName4 = Asset/Asset.Infrastructure
+		SccLocalPath4 = Asset\\Asset.Infrastructure
+		SccProjectUniqueName5 = Test\\Test.Logic\\Test.Logic.csproj
+		SccProjectTopLevelParentUniqueName5 = FastFix.sln
+		SccProjectName5 = Test/Test.Logic
+		SccLocalPath5 = Test\\Test.Logic
+	EndGlobalSection
+EndGlobal

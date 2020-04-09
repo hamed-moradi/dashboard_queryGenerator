@@ -1,0 +1,69 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model PagedListMetaData
+@{
+    //var pagerModel = ViewBag.SearchModel as Presentation.Panel.Models.BaseViewModel;
+
+    var controllerName = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString();
+    string postAction = ViewBag.PostAction ?? "Index";
+}
+<style type="text/css">
+    .jsPager table tr td:first-child {
+        text-align: right
+    }
+
+    .jsPager table tr td:last-child {
+        text-align: left
+    }
+
+    .jsPager table tr td {
+        text-align: center
+    }
+
+    .jsPager Form {
+        float: left
+    }
+</style>
+
+<div class="jsPager @(Model.TotalItemCount == 0 ? "disabled": "")">
+    <table class="table">
+        <tr>
+            <td class="col-md-2">
+                <p style="font-size: 1.1em;padding: 4px 5px;">
+                    <span> نمایش </span>
+                    <strong>@(((Model.PageNumber - 1) * Model.PageSize) + 1)</strong>
+                    <span> تا </span>
+                    @{
+                        var pageSize = ((Model.PageNumber - 1) * Model.PageSize) + Model.PageSize;
+                        if (pageSize > Model.TotalItemCount)
+                        {
+                            <strong>@(Model.TotalItemCount)</strong>
+                        }
+                        else
+                        {
+                            <strong>@(pageSize)</strong>
+                        }
+                    }
+                    <span> از </span>
+                    <strong>@(Model.TotalItemCount)</strong>
+                </p>
+            </td>
+            <td class="col-md-8">
+                @Html.PagedListPager(Model, page => Url.Action(postAction, controllerName, new { pageIndex = page, key = ViewBag.Key }))
+            </td>
+            <td class="col-md-2">
+                @using (Html.BeginForm())
+                {
+                    @*<input type="hidden" id="ThisPageIndex" name="ThisPageIndex" value="1" />
+                    <input type="hidden" id="PageOrder" name="PageOrder" value="@pagerModel.PageOrder" />
+                    <input type="hidden" id="PageOrderBy" name="PageOrderBy" value="@pagerModel.PageOrderBy" />*@
+                    @*@Html.Raw(Presentation.Panel.Helpers.HtmlHelpers.Instance.MakeHiddenFieldSearch(Model))*@
+                <div id="pro_pag2">
+                    @*@Html.DropDownList("ThisPageSize", new SelectList(new Dictionary<string, int> { { "10", 10 }, { "20", 20 }, { "100", 100 } }, "Key", "Value"), new { @class = "pro_pag_tf1", id = "pagesizelist", onchange = "$('#AdvancedSearchForm #ThisPageSize').val($('#pagesizelist').val());$('#AdvancedSearchForm #ThisPageIndex').val(1);$('#AdvancedSearchForm').submit();" })*@
+                    @Html.DropDownList("ThisPageSize", new SelectList(new Dictionary<string, int> { { "10", 10 }, { "20", 20 }, { "100", 100 } }, "Key", "Value"), new { @class = "pro_pag_tf1", id = "pagesizelist", onchange = "$('#AdvancedSearchForm #ThisPageSize').val($('#pagesizelist').val()); $('#AdvancedSearchForm').submit();" })
+                </div>
+                }
+            </td>
+        </tr>
+    </table>
+</div>

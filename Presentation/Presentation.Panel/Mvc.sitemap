@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mvcSiteMap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0"
+            xsi:schemaLocation="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0 MvcSiteMapSchema.xsd">
+
+  <mvcSiteMapNode title="خانه" controller="Home" action="Index">
+    <mvcSiteMapNode title="مدیریت فایل ها" controller="Home" action="ManageFiles"/>
+    <mvcSiteMapNode title="تغییر گذرواژه" controller="Account" action="ChangePassword"/>
+
+
+    <mvcSiteMapNode title="مسابقه ها" controller="Match" action="Index">
+      <mvcSiteMapNode title="ویرایش مسابقه" controller="Match" action="Edit" preservedRouteParameters="id"/>
+      <mvcSiteMapNode title="جزئیات مسابقه" controller="Match" action="Details" preservedRouteParameters="id"/>
+      <mvcSiteMapNode title="حذف مسابقه" controller="Match" action="Delete" preservedRouteParameters="id"/>
+      <mvcSiteMapNode title="ثبت امتیاز" controller="Match2Club" action="SetScore" preservedRouteParameters="matchId"/>
+    </mvcSiteMapNode>
+
+    <mvcSiteMapNode title="رویداد ها" controller="Event" action="Index">
+      <mvcSiteMapNode title="ویرایش رویداد" controller="Event" action="Edit" preservedRouteParameters="id"/>
+      <mvcSiteMapNode title="جزئیات رویداد" controller="Event" action="Details" preservedRouteParameters="id"/>
+      <mvcSiteMapNode title="حذف رویداد" controller="Event" action="Delete" preservedRouteParameters="id"/>
+    </mvcSiteMapNode>
+
+    <mvcSiteMapNode title="کلاب ها" controller="Club" action="Index">
+      <mvcSiteMapNode title="ویرایش کلاب" controller="Club" action="Edit" preservedRouteParameters="id"/>
+      <mvcSiteMapNode title="جزئیات کلاب" controller="Club" action="Details" preservedRouteParameters="id"/>
+      <mvcSiteMapNode title="حذف کلاب" controller="Club" action="Delete" preservedRouteParameters="id"/>
+    </mvcSiteMapNode>
+
+    <mvcSiteMapNode title="پیش بینی ها" controller="Prediction" action="Index">
+    </mvcSiteMapNode>
+
+    <mvcSiteMapNode title="مدیران" controller="Admin" action="Index">
+      <mvcSiteMapNode title="ویرایش مدیر" controller="Admin" action="Edit" preservedRouteParameters="id"/>
+      <mvcSiteMapNode title="جزئیات مدیر" controller="Admin" action="Details" preservedRouteParameters="id"/>
+      <mvcSiteMapNode title="حذف مدیر" controller="Admin" action="Delete" preservedRouteParameters="id"/>
+    </mvcSiteMapNode>
+
+    <mvcSiteMapNode title="نقش ها" controller="Role" action="Index">
+      <mvcSiteMapNode title="ایجاد نقش" controller="Role" action="Create"/>
+      <mvcSiteMapNode title="ویرایش نقش" controller="Role" action="Edit" preservedRouteParameters="id"/>
+      <mvcSiteMapNode title="جزئیات نقش" controller="Role" action="Details" preservedRouteParameters="id"/>
+      <mvcSiteMapNode title="حذف نقش" controller="Role" action="Delete" preservedRouteParameters="id"/>
+      <mvcSiteMapNode title="دسترسی ها" controller="Role" action="Permission" preservedRouteParameters="id"/>
+    </mvcSiteMapNode>
+
+    <mvcSiteMapNode title="کاربران" controller="User" action="Index">
+      <mvcSiteMapNode title="ویرایش کاربر" controller="User" action="Edit" preservedRouteParameters="id"/>
+      <mvcSiteMapNode title="جزئیات کاربر" controller="User" action="Details" preservedRouteParameters="id"/>
+      <mvcSiteMapNode title="حذف کاربر" controller="User" action="Delete" preservedRouteParameters="id"/>
+    </mvcSiteMapNode>
+
+    <mvcSiteMapNode title="ماژول ها" controller="Module" action="Index">
+      <mvcSiteMapNode title="ایجاد ماژول" controller="Module" action="Create"/>
+      <mvcSiteMapNode title="ویرایش ماژول" controller="Module" action="Edit" preservedRouteParameters="id"/>
+      <mvcSiteMapNode title="جزئیات ماژول" controller="Module" action="Details" preservedRouteParameters="id"/>
+    </mvcSiteMapNode>
+
+  </mvcSiteMapNode>
+</mvcSiteMap>

@@ -1,0 +1,274 @@
+﻿@using Presentation.Panel.Models;
+@using Asset.Infrastructure.Common;
+@using MD.PersianDateTime;
+
+@model MatchViewModel
+
+@{
+    ViewBag.Title = "تعریف مسابقه جدید";
+    var date = PersianDateTime.Now;
+    var todayString = "{\"Year\":" + date.Year + ",\"Month\":" + date.Month + ",\"Day\":" + date.Day + ",\"Hour\":0,\"Minute\":0,\"Second\":0}";
+    var dateFormat = "yyyy/MM/dd HH:mm:ss";
+}
+<section class="content">
+    <hr />
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })@Html.HiddenFor(model => model.PreviousUrl)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-5">
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-5">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PredictionWeight, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-5">
+                @Html.EditorFor(model => model.PredictionWeight, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.PredictionWeight, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Thumbnail, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-5">
+                @Html.EditorFor(model => model.Thumbnail, new { htmlAttributes = new { @class = "form-control en dirl", @onclick = "openCustomRoxy('Thumbnail');" } })
+                @Html.ValidationMessageFor(model => model.Thumbnail, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-5">
+                @{
+                    var thumb = string.IsNullOrWhiteSpace(Model?.Thumbnail) ? "/Images/no-image.png" : Model.Thumbnail.Trim();
+                    thumb += "?w=36&h=36&mode=crop";
+                }
+                <img src='@thumb' data-id="Thumbnail" width="36" height="36" class="avatar-mini" alt="" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-5">
+                @Html.EditorFor(model => model.Image, new { htmlAttributes = new { @class = "form-control en dirl", @onclick = "openCustomRoxy('Image');" } })
+                @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-5">
+                @{
+                    var image = string.IsNullOrWhiteSpace(Model?.Image) ? "/Images/no-image.png" : Model.Image.Trim();
+                    image += "?w=36&h=36&mode=crop";
+                }
+                <img src='@image' data-id="Image" width="36" height="36" class="avatar-mini" alt="" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Priority, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-5">
+                @Html.EditorFor(model => model.Priority, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Priority, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EventId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-5">
+                @Html.DropDownListFor(model => model.EventId, (SelectList)ViewBag.EventsList, "-- رویداد --", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.EventId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.GroupId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-5">
+                <select id="GroupId" name="GroupId" class="form-control" dir="rtl"></select>
+                @Html.ValidationMessageFor(model => model.GroupId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.HomeClubId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-5">
+                <select id="HomeClubId" name="HomeClubId" class="form-control" dir="rtl"></select>
+                @Html.ValidationMessageFor(model => model.HomeClubId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AwayClubId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-5">
+                <select id="AwayClubId" name="AwayClubId" class="form-control" dir="rtl"></select>
+                @Html.ValidationMessageFor(model => model.AwayClubId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.OccurrenceDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-5">
+                <div class="input-group">
+                    <div class="input-group-addon" data-mddatetimepicker="true" data-trigger="click" data-targetselector="#OccurrenceDate" data-todate="true" data-enabletimepicker="true"
+                         data-placement="left" data-mdpersiandatetimepicker="" data-mdformat="@dateFormat" data-mdpersiandatetimepickerselecteddatetime='@todayString'
+                         style="cursor: pointer;" data-original-title="" title="" data-mdpersiandatetimepickershowing="false">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </div>
+                    <input type="text" class="form-control" id="OccurrenceDate" name="OccurrenceDate" placeholder="تاریخ شروع" data-mddatetimepicker="true" data-trigger="click"
+                           data-targetselector="#OccurrenceDate" data-todate="true" data-enabletimepicker="true" data-placement="right" data-mdpersiandatetimepicker=""
+                           data-mdformat="@dateFormat" value="@(Model == null ? "" : Model.OccurrenceDate ?? "")" data-mdpersiandatetimepickerselecteddatetime='@todayString'
+                           data-original-title="" title="" data-mdpersiandatetimepickershowing="false">
+                    @Html.ValidationMessageFor(model => model.OccurrenceDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PredictionDeadline, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-5">
+                <div class="input-group">
+                    <div class="input-group-addon" data-mddatetimepicker="true" data-trigger="click" data-targetselector="#PredictionDeadline" data-todate="true" data-enabletimepicker="true"
+                         data-placement="left" data-mdpersiandatetimepicker="" data-mdformat="@dateFormat" data-mdpersiandatetimepickerselecteddatetime='@todayString'
+                         style="cursor: pointer;" data-original-title="" title="" data-mdpersiandatetimepickershowing="false">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </div>
+                    <input type="text" class="form-control" id="PredictionDeadline" name="PredictionDeadline" placeholder="تاریخ شروع" data-mddatetimepicker="true" data-trigger="click"
+                           data-targetselector="#PredictionDeadline" data-todate="true" data-enabletimepicker="true" data-placement="right" data-mdpersiandatetimepicker=""
+                           data-mdformat="@dateFormat" value="@(Model == null ? "" : Model.PredictionDeadline ?? "")" data-mdpersiandatetimepickerselecteddatetime='@todayString'
+                           data-original-title="" title="" data-mdpersiandatetimepickershowing="false">
+                    @Html.ValidationMessageFor(model => model.PredictionDeadline, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-5">
+                @Html.DropDownListFor(model => model.Status, EnumHelper.GetSelectList(typeof(MatchesStatus)), "یک وضعیت را انتخاب کنید", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="ذخیره مشخصات" class="btn btn-primary" />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                @if (string.IsNullOrEmpty(Model.PreviousUrl))
+                {
+                    @Html.ActionLink("لیست مسابقه ها", "Index", null, new { @class = "btn btn-default" })
+                }
+                else
+                {
+                    <a href="@Model.PreviousUrl" class="btn btn-default">لیست مسابقه ها</a>
+                }
+            </div>
+        </div>
+    </div>
+    }
+
+</section>
+@section cssBegin {
+    <link rel="stylesheet" href="/Styles/jquery.Bootstrap-PersianDateTimePicker.min.css" />
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="/Scripts/MdBootstrapPersianDateTimePicker/jalaali.min.js"></script>
+    <script src="/Scripts/MdBootstrapPersianDateTimePicker/jquery.Bootstrap-PersianDateTimePicker.min.js"></script>
+
+    <script>
+
+        if ($('#EventId').val() != null && $('#EventId').val() != '') {
+            let eventId = $('#EventId').val();
+            FillDropDownsByEventId(parseInt(eventId));
+        }
+
+        $(function () {
+            $('#EventId').change(function () {
+                var selectedItem = $(this).val();
+                if (selectedItem != null && selectedItem != '') {
+                    FillDropDownsByEventId(selectedItem);
+                }
+            })
+        });
+
+        function FillDropDownsByEventId(eventId) {
+            $.ajax({
+                url: '/Match/GetMatcheshByEventId',
+                type: 'POST',
+                dataType: 'json',
+                data: { 'eventId': eventId },
+                success: function (response) {
+                    if (response.status == 200) {
+                        if (response.data != null) {
+                            $('#MatchId').html('');
+                            for (var i = 0; i < response.data.length; i++) {
+                                $('#MatchId').append('<option value="' + response.data[i].id + '">' + response.data[i].name + '</option>');
+                            }
+                        }
+                    } else {
+                        alert(data.message);
+                    }
+                },
+                error: function (data) {
+
+                }
+            });
+
+            $.ajax({
+                url: '/Club/GetClubsByEventId',
+                type: 'POST',
+                dataType: 'json',
+                data: { 'eventId': eventId },
+                success: function (response) {
+                    if (response.status == 200) {
+                        if (response.data != null) {
+                            $('#HomeClubId').html('');
+                            for (var i = 0; i < response.data.length; i++) {
+                                $('#HomeClubId').append('<option value="' + response.data[i].id + '">' + response.data[i].name + '</option>');
+                            }
+
+                            $('#AwayClubId').html('');
+                            for (var i = 0; i < response.data.length; i++) {
+                                $('#AwayClubId').append('<option value="' + response.data[i].id + '">' + response.data[i].name + '</option>');
+                            }
+                        }
+                    } else {
+                        alert(data.message);
+                    }
+                },
+                error: function (data) {
+
+                }
+            });
+
+            $.ajax({
+                url: '/MatchGroup/GetMatchGroupeshByEventId',
+                type: 'POST',
+                dataType: 'json',
+                data: { 'eventId': eventId },
+                success: function (response) {
+                    if (response.status == 200) {
+                        if (response.data != null) {
+                            $('#GroupId').html('');
+                            for (var i = 0; i < response.data.length; i++) {
+                                $('#GroupId').append('<option value="' + response.data[i].id + '">' + response.data[i].name + '</option>');
+                            }
+                        }
+                    } else {
+                        alert(data.message);
+                    }
+                },
+                error: function (data) {
+
+                }
+            });
+        }
+    </script>
+}

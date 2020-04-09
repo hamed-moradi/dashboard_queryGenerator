@@ -1,0 +1,14 @@
+﻿@using Presentation.Panel.Models;
+@using Presentation.Panel.Helpers;
+@model IEnumerable<RoleViewModel>
+<table class="table AdvancedGrid treeview">
+    <tr>
+        <th></th>
+        <th>@Html.DisplayNameFor(model => model.Title)</th>
+        <th>@Html.DisplayNameFor(model => model.Description)</th>
+        <th></th>
+    </tr>
+
+    @Html.RoleGridViewTrs(x => Model)
+</table>
+@Html.Partial("_PagedListPager", Model)

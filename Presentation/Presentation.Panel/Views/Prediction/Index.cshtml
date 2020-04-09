@@ -1,0 +1,388 @@
+﻿@using Presentation.Panel.Models;
+@using PagedList;
+@{
+    ViewBag.Title = "گزارش پیش بینی های انجام شده";
+    var entries = ViewBag.OnePageOfEntries as StaticPagedList<PredictionViewModel>;
+    var searchModel = ViewBag.SearchModel as PredictionViewModel;
+    var Statistics = ViewBag.Statistics as PredictionStatisticsViewModel;
+
+    var defaultEventTitle = string.IsNullOrEmpty(searchModel.EventTitle) ? "-" : searchModel.EventTitle;
+    var defaultEventId = searchModel.EventId ?? -1;
+    var defaultMatchId = searchModel.MatchId ?? 0;
+    var defaultHomeClubId = searchModel.HomeClubId ?? 0;
+    var defaultAwayClubId = searchModel.AwayClubId ?? 0;
+    var selectedItem = searchModel.EventId.HasValue && searchModel.EventId != 0 ? searchModel.EventTitle : "--- جستجو کنید ---";
+}
+
+<section class="content">
+    @*@Html.Partial("_AdvancedSearchBoxAjax", searchModel)*@
+    <script>
+        $(document).ready(function () {
+            // submit form on enter
+            $('form#AdvancedSearchForm').keypress(function (e) {
+                var key = e.which;
+                if (key == 13) {
+                    // As ASCII code for ENTER key is "13"
+                    $('form#AdvancedSearchForm').submit(); // Submit form code
+                }
+            });
+
+            // prevent submit AdvancedSearchForm and send ajax request
+            $(document).on('submit', "#AdvancedSearchForm", function (e) {
+                $.loadingBlockShow();
+                var url = "/Prediction/List";
+                $.ajax({
+                    //async: false,
+                    type: "POST",
+                    url: url,
+                    data: $("#AdvancedSearchForm").serialize(),
+                    success: function (data) {
+                        $("div#GridAndPaging").html(data);
+                        $.loadingBlockHide();
+                        $('.AdvancedGrid th label[for*="' + $('#PageOrderBy').val() + '"]').parent().addClass($('#PageOrder').val().toLowerCase());
+                    }
+                });
+
+                e.preventDefault();
+            });
+        });
+    </script>
+    <div class="box box-default collapsed-box" id="AdvancedSearchBox">
+        <div class="box-header with-border">
+            <h3 class="box-title">جستجوی پیشرفته</h3>
+            <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+            </div>
+        </div>
+        <div id="advance-search-collapse" class="box-body collapse">
+            <div id="advance-search-form-container">
+                @using (Html.BeginForm("Index", "Prediction", FormMethod.Post, new { id = "AdvancedSearchForm" }))
+                {
+                    <input type="hidden" id="ThisPageIndex" name="ThisPageIndex" value="@entries.PageNumber" />
+                    <input type="hidden" id="PageOrder" name="PageOrder" value="@searchModel.PageOrder" />
+                    <input type="hidden" id="PageOrderBy" name="PageOrderBy" value="@searchModel.PageOrderBy" />
+                    <input type="hidden" id="EventTitle" name="EventTitle" value="@searchModel.EventTitle" />
+                    <input type="hidden" id="UserId" name="UserId" value="@searchModel.UserId" />
+                    <input type="hidden" id="ThisPageSize" name="ThisPageSize" value="@searchModel.ThisPageSize">
+
+                    //@Html.Raw(HtmlHelpers.Instance.MakeSearchForm(searchModel))
+                    <div class="after-before">
+                        <div class="searchRow" data-type="string" data-id="EventId">
+                            <span style="padding-right: 7px;">رویداد</span>
+                            <select id="EventId" name="EventId" dir="rtl"></select>
+                        </div>
+
+                        <div class="searchRow" data-type="string" data-id="MatchId">
+                            <span style="padding-right: 7px;">مسابقه</span>
+                            <select id="MatchId" name="MatchId" dir="rtl"></select>
+                        </div>
+
+                        <div class="searchRow" data-type="string" data-id="HomeClubId">
+                            <span style="padding-right: 7px;">کلاب</span>
+                            <select id="HomeClubId" name="HomeClubId" dir="rtl"></select>
+                        </div>
+
+                        <div class="searchRow" data-type="string" data-id="UserPoint">
+                            <span style="padding-right: 7px;">امتیاز</span>
+                            <input type="checkbox" checked="" class="hide">
+                            <input type="text" id="UserPoint" name="UserPoint" value="@searchModel.UserPoint" placeholder="امتیاز">
+                        </div>
+                        <div class="searchRow" data-type="datetime" data-id="FromDate">
+                            <span style="padding-right: 7px;">از تاریخ</span>
+                            <input type="checkbox">
+                            <input type="text" id="FromDate" name="FromDate" value="@searchModel.FromDate" placeholder="از تاریخ" disabled="" data-mdpersiandatetimepicker="" data-trigger="click" data-enabletimepicker="false" data-todate="true" data-mdpersiandatetimepickerselecteddatetime="{&quot;Year&quot;:1397,&quot;Month&quot;:2,&quot;Day&quot;:31,&quot;Hour&quot;:0,&quot;Minute&quot;:0,&quot;Second&quot;:0}" data-original-title="" title="" data-mdpersiandatetimepickershowing="false">
+                        </div>
+                        <div class="searchRow" data-type="datetime" data-id="ToDate">
+                            <span style="padding-right: 7px;">تا تاریخ</span>
+                            <input type="checkbox"><input type="text" id="ToDate" name="ToDate" value="@searchModel.ToDate" placeholder="تا تاریخ" disabled="" data-mdpersiandatetimepicker="" data-trigger="click" data-enabletimepicker="false" data-todate="true" data-mdpersiandatetimepickerselecteddatetime="{&quot;Year&quot;:1397,&quot;Month&quot;:2,&quot;Day&quot;:31,&quot;Hour&quot;:0,&quot;Minute&quot;:0,&quot;Second&quot;:0}" data-original-title="" title="" data-mdpersiandatetimepickershowing="false">
+                        </div>
+                    </div>
+                    @*<div class="after-before text-center">
+                        <input type="submit" onclick="DoAdvancedSearch()" class="btn btn-primary marginR10" value="پیدا کن">
+                    </div>*@
+                }
+            </div>
+            <div style="padding:7px 0 8px;background-color: #eeeeee;">
+                <button onclick='CheckAdvancedSearch()' class='btn btn-primary marginR10'>جستجو <i class='fa fa-filter'></i></button>
+                <button onclick='ResetAdvancedSearchForm()' class='btn btn-danger marginR10'>حذف فیلترها <i class='fa fa-undo'></i></button>
+            </div>
+        </div>
+    </div>
+    @*<div class="well well-sm" style="padding : 0">
+        <ul class="nav nav-pills">
+            <li><a href="#">تعداد پیش بینی های انجام شده : <span id="PredictionCount" class="badge">@Statistics.PredictionCount</span></a></li>
+            <li><a href="#">مجموع امتیازات : <span id="TotalPoints" class="badge">@Statistics.TotalPoints</span></a></li>
+        </ul>
+    </div>*@
+
+    <div id="GridAndPaging">
+        @Html.Partial("_PredictionGrid", entries)
+    </div>
+
+    @section cssBegin {
+        <link href="~/Styles/select2.min.css" rel="stylesheet" />
+        <style>
+            .select2 {
+                width: 100% !important;
+                height: 27px !important;
+                padding: 0px 0 0 0 !important;
+                margin-top: 0px !important;
+            }
+        </style>
+    }
+    @section cssEnd{
+        @Styles.Render("~/bundles/GridCss")
+        
+        
+    }
+    @section scripts{
+        @Scripts.Render("~/bundles/GridScripts")
+        <script src="~/Scripts/select2.full.min.js"></script>
+        <script type="text/javascript">
+
+         if (@defaultEventId  != null && @defaultEventId != -1) {
+             let eventId = @defaultEventId;
+             let title = '@defaultEventTitle';
+             FillDropDownsByEventId(eventId);
+            }
+
+        InitializeObjectDrp('#EventId', '/Event/DropDown', "@selectedItem", "@defaultEventId");
+            $(function () {
+                $('#EventId').change(function () {
+                    $('#EventTitle').val($("#select2-EventId-container").text());
+                    var selectedItem = $(this).val();
+                    if (selectedItem !== null && selectedItem !== '') {
+                        FillDropDownsByEventId(selectedItem);
+                    }
+                })
+            });
+
+        function FillDropDownsByEventId(eventId) {
+            $.ajax({
+                url: '/Match/GetMatcheshByEventId',
+                type: 'POST',
+                dataType: 'json',
+                data: { 'eventId': eventId },
+                success: function (response) {
+                    if (response.status == 200) {
+                        if (response.data != null) {
+                            var mId = @defaultMatchId;
+                            $('#MatchId').html('');
+                            $('#MatchId').append('<option value="0">همه مسابقات</option>');
+                            for (var i = 0; i < response.data.length; i++) {
+                                if (mId == response.data[i].id) {
+                                    $('#MatchId').append('<option value="' + response.data[i].id + '" selected>' + response.data[i].name + '</option>');
+                                }
+                                else {
+                                    $('#MatchId').append('<option value="' + response.data[i].id + '">' + response.data[i].name + '</option>');
+                                }
+                            }
+                        }
+                    } else {
+                        alert(data.message);
+                    }
+                },
+                error: function (data) {
+
+                }
+            });
+
+            $.ajax({
+                url: '/Club/GetClubsByEventId',
+                type: 'POST',
+                dataType: 'json',
+                data: { 'eventId': eventId },
+                success: function (response) {
+                    if (response.status == 200) {
+                        if (response.data != null) {
+                            var hClubId = @defaultHomeClubId;
+
+                            $('#HomeClubId').html('');
+                            $('#HomeClubId').append('<option value="0">همه کلاب ها</option>');
+                            for (var i = 0; i < response.data.length; i++) {
+                                if (hClubId == response.data[i].id) {
+                                    $('#HomeClubId').append('<option value="' + response.data[i].id + '" selected>' + response.data[i].name + '</option>');
+                                }
+                                else {
+                                    $('#HomeClubId').append('<option value="' + response.data[i].id + '">' + response.data[i].name + '</option>');
+                                }
+                            }
+                        }
+                    } else {
+                        alert(data.message);
+                    }
+                },
+                error: function (data) {
+
+                }
+            });
+        }
+            $('.AdvancedGrid th label[for*="@searchModel.PageOrderBy"]').parent().addClass('@searchModel.PageOrder.ToLower()');
+        </script>
+    }
+</section>
+
+
+@*<section class="content">
+        <div class="row floatBox">
+            <div class="col-md-6 col-xs-12">
+            </div>
+        </div>
+        <br /><br />
+
+        <div class="well well-sm" style="padding : 0">
+            <ul class="nav nav-pills">
+                <li><a href="#">تعداد پیش بینی های انجام شده : <span class="badge">@Statistics.PredictionCount</span></a></li>
+                <li><a href="#">مجموع امتیازات : <span class="badge">@Statistics.TotalPoints</span></a></li>
+            </ul>
+        </div>
+        <table class="table admins AdvancedGrid">
+            @{
+                var first = new PredictionViewModel();
+            }
+            <tr>
+                <th></th>
+                <th>@Html.LabelFor(model => first.UserName)</th>
+                <th>@Html.LabelFor(model => first.MatchTitle)</th>
+                <th>@Html.LabelFor(model => first.HomeClubName)</th>
+                <th>@Html.LabelFor(model => first.HomeClubScore)</th>
+                <th>@Html.LabelFor(model => first.AwayClubScore)</th>
+                <th>@Html.DisplayNameFor(model => first.AwayClubName)</th>
+                <th>@Html.DisplayNameFor(model => first.UserPoint)</th>
+                @*<th></th>
+            </tr>
+    @foreach (var item in entries)
+        {
+            <tr>
+                <td>
+                    @{
+                        var original = string.IsNullOrWhiteSpace(item.MatchImage) ? "" : item.MatchImage.Trim();
+                        if (string.IsNullOrWhiteSpace(original))
+                        {
+
+                            original = "/Images/no-image.png";
+                        }
+
+                        var src = original + "?w=36&h=36&mode=crop";
+                    }
+                    <a href="@original" target="_blank" title="مشاهده تصویر در ابعاد واقعی">
+                        <img class="avatar-mini" src="@src" width="35" height="35" alt="" />
+                    </a>
+                </td>
+                <td>@Html.DisplayFor(modelItem => item.UserName)</td>
+                <td>@Html.DisplayFor(modelItem => item.MatchTitle)</td>
+                <td>@Html.DisplayFor(modelItem => item.HomeClubName)</td>
+                <td>@Html.DisplayFor(modelItem => item.HomeClubScore)</td>
+                <td>@Html.DisplayFor(modelItem => item.AwayClubScore)</td>
+                <td>@Html.DisplayFor(modelItem => item.AwayClubName)</td>
+                <td>@Html.DisplayFor(modelItem => item.UserPoint)</td>
+             <td>
+                        @Html.ActionLink("ویرایش", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("جزئیات", "Details", new { id = item.Id })
+                    </td>
+            </tr>
+                        }
+            </table>
+        <div class="jsPager">
+            @Html.PagedListPager(entries, page => Url.Action("Index", new { pageIndex = page }))
+        </div>
+        @section cssBegin {
+            <link href="~/Styles/select2.min.css" rel="stylesheet" />
+            <style>
+                .select2 {
+                    width: 100% !important;
+                    height: 27px !important;
+                    padding: 0px 0 0 0 !important;
+                    margin-top: 0px !important;
+                }
+            </style>
+        }
+        @section cssEnd{
+            @Styles.Render("~/bundles/GridCss")
+        }
+        @section scripts{
+            @Scripts.Render("~/bundles/GridScripts")
+            <script src="~/Scripts/select2.full.min.js"></script>
+            <script type="text/javascript">
+
+                 if (@defaultEventId  != null && @defaultEventId != -1) {
+                     let eventId = @defaultEventId;
+                     let title = '@defaultEventTitle';
+                     FillDropDownsByEventId(eventId);
+                    }
+
+                InitializeObjectDrp('#EventId', '/Event/DropDown', "@selectedItem", "@defaultEventId");
+                    $(function () {
+                        $('#EventId').change(function () {
+                            $('#EventTitle').val($("#select2-EventId-container").text());
+                            var selectedItem = $(this).val();
+                            if (selectedItem !== null && selectedItem !== '') {
+                                FillDropDownsByEventId(selectedItem);
+                            }
+                        })
+                    });
+
+                function FillDropDownsByEventId(eventId) {
+                    $.ajax({
+                        url: '/Match/GetMatcheshByEventId',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: { 'eventId': eventId },
+                        success: function (response) {
+                            if (response.status == 200) {
+                                if (response.data != null) {
+                                    var mId = @defaultMatchId;
+                                    $('#MatchId').html('');
+                                    $('#MatchId').append('<option value="0">همه مسابقات</option>');
+                                    for (var i = 0; i < response.data.length; i++) {
+                                        if (mId == response.data[i].id) {
+                                            $('#MatchId').append('<option value="' + response.data[i].id + '" selected>' + response.data[i].name + '</option>');
+                                        }
+                                        else {
+                                            $('#MatchId').append('<option value="' + response.data[i].id + '">' + response.data[i].name + '</option>');
+                                        }
+                                    }
+                                }
+                            } else {
+                                alert(data.message);
+                            }
+                        },
+                        error: function (data) {
+
+                        }
+                    });
+
+                    $.ajax({
+                        url: '/Club/GetClubsByEventId',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: { 'eventId': eventId },
+                        success: function (response) {
+                            if (response.status == 200) {
+                                if (response.data != null) {
+                                    var hClubId = @defaultHomeClubId;
+
+                                    $('#HomeClubId').html('');
+                                    $('#HomeClubId').append('<option value="0">همه کلاب ها</option>');
+                                    for (var i = 0; i < response.data.length; i++) {
+                                        if (hClubId == response.data[i].id) {
+                                            $('#HomeClubId').append('<option value="' + response.data[i].id + '" selected>' + response.data[i].name + '</option>');
+                                        }
+                                        else {
+                                            $('#HomeClubId').append('<option value="' + response.data[i].id + '">' + response.data[i].name + '</option>');
+                                        }
+                                    }
+                                }
+                            } else {
+                                alert(data.message);
+                            }
+                        },
+                        error: function (data) {
+
+                        }
+                    });
+                }
+                    $('.AdvancedGrid th label[for*="@searchModel.PageOrderBy"]').parent().addClass('@searchModel.PageOrder.ToLower()');
+            </script>
+        }
+        </section>*@

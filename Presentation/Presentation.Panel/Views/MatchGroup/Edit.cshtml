@@ -1,0 +1,71 @@
+﻿@using Presentation.Panel.Models;
+@using Presentation.Panel.Helpers;
+@using Asset.Infrastructure.Common;
+@using MD.PersianDateTime;
+@using Asset.Infrastructure._App;
+@model MatchGroupViewModel
+
+@{
+    ViewBag.Title = "ویرایش گروه مسابقه";
+    if (Model != null)
+    {
+        ViewBag.Title = "ویرایش «" + Model.Title + "»";
+    }
+}
+
+<section class="content">
+    <hr />
+
+    @using (Html.BeginForm("Edit", "MatchGroup", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })@Html.HiddenFor(model => model.PreviousUrl)
+            @Html.HiddenFor(model => model.Id)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-5">
+                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-5">
+                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.EventId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-5">
+                    @Html.DropDownListFor(model => model.EventId, (SelectList)ViewBag.EventsList, "-- رویداد --", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.EventId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="ذخیره تغییرات" class="btn btn-primary" />
+                    @Html.Raw("&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;")
+                    @if (string.IsNullOrEmpty(Model.PreviousUrl))
+                    {
+                        @Html.ActionLink("لیست گروه ها", "Index", null, new { @class = "btn btn-default" })
+                    }
+                    else
+                    {
+                        <a href="@Model.PreviousUrl" class="btn btn-default">لیست گروه ها</a>
+                    }
+
+                </div>
+            </div>
+        </div>
+    }
+</section>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

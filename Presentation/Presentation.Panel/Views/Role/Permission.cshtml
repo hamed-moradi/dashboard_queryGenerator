@@ -1,0 +1,127 @@
+﻿@using Presentation.Panel.Models;
+
+@model RoleViewModel
+
+@{
+    ViewBag.Title = "دسترسی نقش";
+    if (Model != null)
+    {
+        ViewBag.Title += " «" + Model.Title + "»";
+    }
+    var allModules = ViewBag.AllModules as List<ModuleViewModel>;
+}
+
+<section class="content">
+    <hr />
+
+    @using (Html.BeginForm("Permission", "Role", FormMethod.Post, new { @id = "permission" }))
+    {
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="SelectedRole2Modules" id="SelectedRole2Modules" />
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })@Html.HiddenFor(model => model.PreviousUrl)
+            @if (allModules != null)
+            {
+                var parents = allModules.Where(m => m.ParentId == null).ToList();
+
+                foreach (var p in parents)
+                {
+                    <div class="box box-default">
+                        <div class="box-header with-border">
+                            <label>
+                                @{
+                                    var isChecked = "";
+                                    if (Model.Role2Modules.Any(x => x.ModuleId == p.Id))
+                                    {
+                                        isChecked = "checked";
+                                    }
+                                    <input id="@p.Id" type="checkbox" name="r3" class="flat-red parent" @isChecked onchange="ChangeChildren(this)">
+                                    @p.Title
+                                }
+                            </label>
+                            <div class="box-tools pull-right">
+                                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            @{
+                                var children = allModules.Where(m => m.ParentId == p.Id).ToList();
+                                if (children != null)
+                                {
+                                    foreach (var c in children)
+                                    {
+                                        <label>
+                                            @{
+                                                isChecked = "";
+                                                if (Model.Role2Modules.Any(x => x.ModuleId == c.Id))
+                                                {
+                                                    isChecked = "checked";
+                                                }
+                                                <input id="@c.Id" data-parent="@p.Id" type="checkbox" name="r3" class="flat-red" @isChecked>
+                                                @c.Title
+                                            }
+                                        </label>
+                                        @Html.Raw("&nbsp;&nbsp;")
+                                                    }
+                                                }
+                            }
+                        </div>
+                    </div>
+                                                    }
+                                                }
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="ذخیره تغییرات" class="btn btn-primary" />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    @if (string.IsNullOrEmpty(Model.PreviousUrl))
+                {
+                        @Html.ActionLink("لیست نقش ها", "Index", null, new { @class = "btn btn-default" })
+                    }
+                    else
+                    {
+                        <a href="@Model.PreviousUrl" class="btn btn-default">لیست مسابقه ها</a>
+                    }
+                </div>
+            </div>
+        </div>
+       }
+</section>
+@section cssBegin{
+    <link rel="stylesheet" href="/Styles/all.css">
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="/Scripts/icheck.min.js"></script>
+    <script>
+        $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+            checkboxClass: 'icheckbox_flat-green',
+            radioClass: 'iradio_flat-green'
+        });
+        function ChangeChildren(obj) {
+            var id = $(obj.currentTarget).attr('id');
+            if ($('input#'+id).prop('checked')) {
+                $('input[data-parent="' + id + '"]').iCheck('check');
+            }
+            else {
+                $('input[data-parent="' + id + '"]').iCheck('uncheck');
+            }
+        }
+        $('input[type="checkbox"].parent').on("ifChanged", ChangeChildren);
+        jQuery('form#permission').submit(function (e) {
+            var selectedRole2Modules=[];
+            var index=0;
+            $('input[type="checkbox"].flat-red').each(function () {
+                if($(this).prop('checked')){
+                    var permission = {};
+                    permission.RoleId=@Model.Id;
+                    permission.ModuleId=$(this).attr('id');
+                    selectedRole2Modules[index]=permission;
+                    index++;
+                }
+            });
+            $('#SelectedRole2Modules').val(JSON.stringify(selectedRole2Modules));
+            //e.preventDefault();
+        });
+    </script>
+}

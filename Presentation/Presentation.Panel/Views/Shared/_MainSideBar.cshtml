@@ -1,0 +1,96 @@
+﻿@using Presentation.Panel.Helpers;
+@using Asset.Infrastructure.Common;
+@using Asset.Infrastructure._App;
+
+@{
+    var parentMenuItem = string.Empty;
+}
+<aside class="main-sidebar">
+    <section class="sidebar">
+        <div class="user-panel">
+            <div class="pull-right image">
+                @{
+                    var user = (User as CustomPrincipal);
+                    var src = !string.IsNullOrWhiteSpace(user?.Avatar) ? user.Avatar : " ~/Images/avatar-anonymous.png".Replace("~", "");
+                    src += "?w=45&h=45&mode=crop";
+                }
+                <img src="@src" class="img-circle" alt="User Image" />
+            </div>
+            <div class="pull-right info">
+                <p>@(!string.IsNullOrWhiteSpace(user?.FullName) ? user.FullName : "")</p>
+                <p class="en text-left">@(!string.IsNullOrWhiteSpace(user?.IP) ? user.IP : "")</p>
+            </div>
+        </div>
+        <div id="main-menu">
+            <div class="list-group panel">
+                <a href="/" class="list-group-item">
+                    داشبورد
+            
+                </a>
+                @{
+                    var modules = AdminHelper.Modules().Where(w => w.ParentId == null || w.ParentId == 0).OrderBy(ob => ob.Category).ThenBy(gb => gb.Priority).GroupBy(gb => gb.Category).ToList();
+                }
+
+                @foreach (var parent in modules)
+                {
+                    var categoryName = EnumHelper<GeneralEnums.ModuleCategory>.GetDisplayValue((GeneralEnums.ModuleCategory)parent.Key);
+                    var categoryIcon = EnumHelper<GeneralEnums.ModuleCategoryIco>.GetDisplayValue((GeneralEnums.ModuleCategoryIco)parent.Key);
+                    
+                    <a id="parent_@parent.Key" href="#child_@parent.Key" class="list-group-item" data-toggle="collapse" data-parent="#main-menu">
+                        <i class="@categoryIcon"></i>
+                        @categoryName 
+                        <i class="fa fa-caret-down pull-left"></i>
+                    </a>
+                    <div class="collapse" id="child_@parent.Key">
+                        @foreach (var child in parent)
+                        {
+                            var admin = (User as CustomPrincipal);
+                            if (child.Path.ToLower() == admin?.Path)
+                            {
+                                parentMenuItem = $"parent_{parent.Key}";
+                            }
+                            if (!child.Path.ToLower().Contains("home/index"))
+                            {
+                                <a href="@child.Path" class="list-group-item clearfix @(!string.IsNullOrWhiteSpace(child.Icon) ? child.Icon : "fa fa-circle") @(child.Path.ToLower() == admin?.Path?"selected":string.Empty)" >
+                                    <span class="pull-right"> @child.Title</span>
+                                </a>
+                            }
+                        }
+                    </div>
+                }
+                <a href="#profile" class="list-group-item" data-toggle="collapse" data-parent="#main-menu">
+                    <i class="menu-icon fa fa-user"></i>
+                    پروفایل
+                    <i class="fa fa-caret-down pull-left"></i>
+                </a>
+                <div class="collapse" id="profile">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a href="/Account/Changepassword" class="list-group-item clearfix fa fa-key">
+                            <span class="pull-right">تغییر گذرواژه</span>
+                        </a>
+                        using (Html.BeginForm("SignOut", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <a href="javascript:document.getElementById('logoutForm').submit()" class="list-group-item fa fa-sign-out clearfix"><span>خروج</span></a>
+                        }
+                    }
+                    else
+                    {
+                        <a href="/account/signIn" class="list-group-item clearfix fa fa-circle">
+                            <span class="pull-right">ورود</span>
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+</aside>
+
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+        var element = document.getElementById('@parentMenuItem');
+        if (element != undefined)
+            element.click();
+    });
+</script>

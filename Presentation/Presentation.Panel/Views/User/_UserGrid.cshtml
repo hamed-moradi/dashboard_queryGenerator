@@ -1,0 +1,50 @@
+﻿@using Presentation.Panel.Models;
+@using Presentation.Panel.Helpers;
+@using Asset.Infrastructure.Common;
+@model IEnumerable<UserViewModel>
+
+<table class="table AdvancedGrid treeview">
+    <tr>
+        <th></th>
+        <th>@Html.DisplayNameFor(model => model.UserName)</th>
+        <th>@Html.DisplayNameFor(model => model.NickName)</th>
+        <th>@Html.DisplayNameFor(model => model.Phone)</th>
+        <th>@Html.DisplayNameFor(model => model.Email)</th>
+        <th>@Html.DisplayNameFor(model => model.NumberOfPredictions)</th>
+        <th>@Html.DisplayNameFor(model => model.TotalPoints)</th>
+        <th>@Html.DisplayNameFor(model => model.StatusTitle)</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @{
+                    var original = string.IsNullOrWhiteSpace(item.Avatar) ? "" : item.Avatar.Trim();
+                    if (string.IsNullOrWhiteSpace(original))
+                    {
+                        original = "/Images/avatar-anonymous.png";
+                    }
+                    var src = original + "?w=36&h=36&mode=crop";
+                }
+                <a href="@original" target="_blank" title="مشاهده تصویر در ابعاد واقعی">
+                    <img class="avatar-mini" src="@src" width="35" height="35" alt="" />
+                </a>
+            </td>
+            <td>@Html.DisplayFor(modelItem => item.UserName)</td>
+            <td>@Html.DisplayFor(modelItem => item.NickName)</td>
+            <td>@Html.DisplayFor(modelItem => item.Phone)</td>
+            <td>@Html.DisplayFor(modelItem => item.Email)</td>
+            <td>@Html.DisplayFor(modelItem => item.NumberOfPredictions)</td>
+            <td>@Html.DisplayFor(modelItem => item.TotalPoints)</td>
+            <td>@Html.DisplayFor(modelItem => item.StatusTitle)</td>
+            <td>
+                @Html.ActionLink("ویرایش", "Edit", new { id = item.Id }) |
+                <a href="@Url.Action("Index" , "Prediction" , new { userId = item.Id })">پیش بینی ها</a> |
+                @Html.ActionLink("جزئیات", "Details", new { id = item.Id })
+            </td>
+        </tr>
+      }
+</table>
+@Html.Partial("_PagedListPager", Model)

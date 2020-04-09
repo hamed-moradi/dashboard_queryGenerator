@@ -1,0 +1,34 @@
+﻿
+@using Presentation.Panel.Models;
+@using PagedList;
+@{
+    ViewBag.Title = "ماژولها";
+    var entries = ViewBag.OnePageOfEntries as StaticPagedList<ModuleViewModel>;
+    var searchModel = ViewBag.SearchModel as ModuleViewModel;
+}
+
+<section class="content">
+    <div class="row floatBox">
+        <div class="col-md-6 col-xs-12"></div>
+        <div class="col-md-6 col-xs-12">
+            @Html.ActionLink("تعریف ماژول جدید", "Create", null, new { @class = "btn btn-primary pull-left" })
+        </div>
+    </div>
+    <br />
+    @Html.Partial("_AdvancedSearchBoxAjax", searchModel)
+    <div id="GridAndPaging">
+        @Html.Partial("_ModuleGrid", entries)
+    </div>
+
+    @section cssEnd{
+        @Styles.Render("~/bundles/GridCss")
+        
+        
+    }
+    @section scripts{
+        @Scripts.Render("~/bundles/GridScripts")
+        <script type="text/javascript">
+            $('.AdvancedGrid th label[for*="@searchModel.PageOrderBy"]').parent().addClass('@searchModel.PageOrder.ToLower()');
+        </script>
+    }
+</section>

@@ -1,0 +1,63 @@
+﻿@using Presentation.Panel.Models;
+
+@model AppSettingViewModel
+
+@{
+    ViewBag.Title = "جزئیات تنظیمات";
+}
+<section class="content-header">
+
+    <h1>
+
+        <small>جزییات</small>
+    </h1>
+</section>
+<section class="content">
+    <hr />
+    <div>
+        <dl class="dl-horizontal">
+            
+            <dd>
+                @{
+                    var original = string.IsNullOrWhiteSpace(Model.Icon) ? "" : Model.Icon.Trim();
+                    original = string.IsNullOrWhiteSpace(original) ? "/Images/avatar-anonymous.png" : original;
+
+                    var src = original;
+                }
+                <a href="@original" target="_blank" title="مشاهده تصویر در ابعاد واقعی">
+                    <img class="avatar-mini" src="@src" width="80" height="80" alt="" />
+                </a>
+            </dd>
+
+            <dt>@Html.DisplayNameFor(model => model.Key)</dt>
+            <dd>@Html.DisplayFor(model => model.Key)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.Value)</dt>
+            <dd>@Html.DisplayFor(model => model.Value)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.Title)</dt>
+            <dd>@Html.DisplayFor(model => model.Title)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.Description)</dt>
+            <dd>@Html.DisplayFor(model => model.Description)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.Icon)</dt>
+            <dd>@Html.DisplayFor(model => model.Icon)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.Priority)</dt>
+            <dd>@Html.DisplayFor(model => model.Priority)</dd>
+            
+        </dl>
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })@Html.HiddenFor(model => model.PreviousUrl)
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                @*<input type="submit" value="حذف کن" class="btn btn-danger" />*@
+                @Html.Raw("&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;")
+                @Html.ActionLink("لیست تنظیمات", "Index", null, new { @class = "btn btn-default" })
+            </div>
+        }
+    </div>
+</section>

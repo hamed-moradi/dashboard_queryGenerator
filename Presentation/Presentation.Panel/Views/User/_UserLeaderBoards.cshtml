@@ -1,0 +1,34 @@
+﻿@using Presentation.Panel.Models;
+@using Presentation.Panel.Helpers;
+@using Asset.Infrastructure.Common;
+@model IEnumerable<UserLeaderBoardViewModel>
+
+<table class="table AdvancedGrid treeview">
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.UserName)</th>
+        <th>@Html.DisplayNameFor(model => model.EventTitle)</th>
+        <th>@Html.DisplayNameFor(model => model.TotalPoints)</th>
+
+        <th>@Html.DisplayNameFor(model => model.CorrectResultAndNumberOfGoals)</th>
+        <th>@Html.DisplayNameFor(model => model.GoalDifference)</th>
+        <th>@Html.DisplayNameFor(model => model.CorrectCinnerAndLoser)</th>
+        <th>@Html.DisplayNameFor(model => model.CorrectNumberOfGoalsATeam)</th>
+        <th>@Html.DisplayNameFor(model => model.WrongPrediction)</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.UserName)</td>
+            <td>@Html.DisplayFor(modelItem => item.EventTitle)</td>
+            <td>@Html.DisplayFor(modelItem => item.TotalPoints)</td>
+
+            <td>@Html.DisplayFor(modelItem => item.CorrectResultAndNumberOfGoals)</td>
+            <td>@Html.DisplayFor(modelItem => item.GoalDifference)</td>
+            <td>@Html.DisplayFor(modelItem => item.CorrectCinnerAndLoser)</td>
+            <td>@Html.DisplayFor(modelItem => item.CorrectNumberOfGoalsATeam)</td>
+            <td>@Html.DisplayFor(modelItem => item.WrongPrediction)</td>
+        </tr>
+     }
+</table>
+@Html.Partial("_PagedListPager", Model)

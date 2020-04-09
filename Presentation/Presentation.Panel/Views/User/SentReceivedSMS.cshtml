@@ -1,0 +1,68 @@
+﻿@using Presentation.Panel.Models;
+@using Presentation.Panel.Helpers;
+@using Asset.Infrastructure.Common;
+@using PagedList;
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "پیامک های دریافتی و ارسالی برای مشتری";
+    var entries = ViewBag.OnePageOfEntries as StaticPagedList<SentReceivedSMSViewModel>;
+    var searchModel = ViewBag.SearchModel as SentReceivedSMSViewModel;
+}
+
+<section class="content">
+    <h4>شماره تلفن: @searchModel.MSISDN</h4>
+    <br />
+    <div class="box box-default collapsed-box" id="AdvancedSearchBox">
+        <div class="box-header with-border">
+            <h3 class="box-title">جستجوی پیشرفته</h3>
+            <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+            </div>
+        </div>
+        <div class="box-body collapse">
+            @using (Html.BeginForm("SentReceivedSMS", "User", FormMethod.Post, new { id = "AdvancedSearchForm" }))
+            {
+                <input type="hidden" id="MSISDN" name="MSISDN" value="@searchModel.MSISDN" />
+                <input type="hidden" id="ThisPageIndex" name="ThisPageIndex" value="@entries.PageNumber" />
+                <input type="hidden" id="PageOrder" name="PageOrder" value="@searchModel.PageOrder" />
+                <input type="hidden" id="PageOrderBy" name="PageOrderBy" value="@searchModel.PageOrderBy" />
+                @Html.Raw(HtmlHelpers.Instance.MakeSearchForm(searchModel))
+            }
+        </div>
+    </div>
+    <br />
+    <table class="table AdvancedGrid">
+        @{
+            var first = new SentReceivedSMSViewModel();
+        }
+        <tr>
+            <th>@Html.DisplayNameFor(model => first.RowNumber)</th>
+            <th>@Html.DisplayNameFor(model => first.Body)</th>
+            <th>@Html.DisplayNameFor(model => first.CreatedAt)</th>
+            <th>@Html.DisplayNameFor(model => first.SmsType)</th>
+        </tr>
+
+        @foreach (var item in entries)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.RowNumber)</td>
+                <td>@Html.DisplayFor(modelItem => item.Body)</td>
+                <td>@Html.DisplayFor(modelItem => item.CreatedAt)</td>
+                <td><span title="@(item.SmsType.Value == GeneralEnums.SmsType.Send ? "ارسالی" : "دریافتی")" class="fa @(item.SmsType.HasValue ? (item.SmsType.Value == GeneralEnums.SmsType.Send ? "fa-arrow-up blue" : "fa-arrow-down green"): "") fa-lg"></span></td>
+            </tr>
+        }
+    </table>
+    <div class="jsPager">
+        @Html.PagedListPager(entries, page => Url.Action("Index", new { pageIndex = page }))
+    </div>
+    @section cssEnd{
+        @Styles.Render("~/bundles/GridCss")
+    }
+    @section scripts{
+        @Scripts.Render("~/bundles/GridScripts")
+        <script type="text/javascript">
+            $('.AdvancedGrid th label[for*="@searchModel.PageOrderBy"]').parent().addClass('@searchModel.PageOrder.ToLower()');
+        </script>
+    }
+</section>

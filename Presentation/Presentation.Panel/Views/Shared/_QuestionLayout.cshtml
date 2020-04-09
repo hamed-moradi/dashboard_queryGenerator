@@ -1,0 +1,59 @@
+﻿<!doctype html>
+<html>
+<head>
+    <title>@(!string.IsNullOrWhiteSpace(ViewBag.Title) ? ViewBag.Title.Trim() + " | " : string.Empty)کنجد</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="/QuestionFiles/Content/css/ionicons.css">
+    <link rel="stylesheet" href="/QuestionFiles/Content/css/konjed.css" />
+    <link rel="stylesheet" href="/QuestionFiles/Content/css/style.css">
+    <link rel="stylesheet" href="/QuestionFiles/Content/css/custom.css" />
+    <link rel="stylesheet" href="/QuestionFiles/Scripts/alertifyjs/css/default.rtl.css" />
+    <link rel="stylesheet" href="/QuestionFiles/Scripts/alertifyjs/css/alertify.css" />
+    <link rel="stylesheet" href="/QuestionFiles/Scripts/alertifyjs/css/alertify.rtl.css" />
+    <link rel="stylesheet" href="/QuestionFiles/Content/css/jquery.Bootstrap-PersianDateTimePicker.min.css" />
+    <link rel="stylesheet" href="/QuestionFiles/Content/css/jquery-ui.min.css" />
+    <link rel="stylesheet" href="/QuestionFiles/Content/css/easy-autocomplete.css" />
+    <link rel="stylesheet" href="/QuestionFiles/Content/css/Colors.min.css" />
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/QuestionFiles/Content/images/fav/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/QuestionFiles/Content/images/fav/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/QuestionFiles/Content/images/fav/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/QuestionFiles/Content/images/fav/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/QuestionFiles/Content/images/fav/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/QuestionFiles/Content/images/fav/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/QuestionFiles/Content/images/fav/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/QuestionFiles/Content/images/fav/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/QuestionFiles/Content/images/fav/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/QuestionFiles/Content/images/fav/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/QuestionFiles/Content/images/fav/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/QuestionFiles/Content/images/fav/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/QuestionFiles/Content/images/fav/favicon-16x16.png">
+    <link rel="manifest" href="/QuestionFiles/Content/images/fav/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/QuestionFiles/Content/images/fav/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    @RenderSection("Style", required: false)
+</head>
+<body>
+    @RenderBody()
+    
+    <script type="text/javascript" src="/QuestionFiles/Scripts/jquery.js"></script>
+    <script type="text/javascript" src="/QuestionFiles/Scripts/tools.js"></script>
+    <script type="text/javascript" src="/QuestionFiles/Scripts/custom.js"></script>
+    <script type="text/javascript" src="/QuestionFiles/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script type="text/javascript" src="/QuestionFiles/Scripts/jcf.js"></script>
+    <script type="text/javascript" src="/QuestionFiles/Scripts/alertifyjs/alertify.js"></script>
+    <script type="text/javascript" src="/QuestionFiles/Scripts/jquery.easy-autocomplete.js"></script>
+    <script src="/QuestionFiles/Scripts/jquery.validate.min.js"></script>
+    <script src="/QuestionFiles/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="/QuestionFiles/Scripts/jquery.sticky-kit.min.js"></script>
+    <script type="text/javascript">
+        if ($('#indicator-1023').css('display') != 'none') {
+            $(".sidebar").stick_in_parent();
+        }
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

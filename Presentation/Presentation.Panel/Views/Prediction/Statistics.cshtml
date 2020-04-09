@@ -1,0 +1,33 @@
+﻿@using Presentation.Panel.Models
+@using Presentation.Panel.Helpers
+@model PredictionStatisticsViewModel
+
+@{
+    ViewBag.Title = "آمار پیش بینی ها";
+
+}
+
+
+<h2>آمار پیش بینی ها</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PredictionCount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PredictionCount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalPoints)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalPoints)
+        </dd>
+
+    </dl>
+</div>

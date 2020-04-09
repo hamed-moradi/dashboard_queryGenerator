@@ -1,0 +1,75 @@
+﻿@using Presentation.Panel.Models;
+@using Asset.Infrastructure.Common;
+
+@model UserViewModel
+
+@{
+    ViewBag.Title = "مشخصات کاربر";
+    if (Model != null)
+    {
+        ViewBag.Title = "مشخصات «" + Model.NickName + "»";
+    }
+}
+
+<section class="content">
+    <hr />
+    <div id="test">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })@Html.HiddenFor(model => model.PreviousUrl)
+    </div>
+    <div>
+        <dl class="dl-horizontal">
+
+            <dt>
+                @{
+                    var original = string.IsNullOrWhiteSpace(Model.Avatar) ? "" : Model.Avatar.Trim();
+                    if (string.IsNullOrWhiteSpace(original))
+                    {
+                        original = "/Images/avatar-anonymous.png";
+                    }
+                    var src = original + "?w=80&h=80&mode=crop";
+                }
+                <a href="@original" target="_blank" title="مشاهده تصویر در ابعاد واقعی">
+                    <img class="avatar-mini" src="@src" width="80" height="80" alt="" />
+                </a>
+                <br /><br />
+            </dt>
+            <dd></dd>
+
+            <dt>@Html.DisplayNameFor(model => model.Phone)</dt>
+            <dd>@Html.DisplayFor(model => model.Phone)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.Email)</dt>
+            <dd>@Html.DisplayFor(model => model.Email)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.UserName)</dt>
+            <dd>@Html.DisplayFor(model => model.UserName)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.NickName)</dt>
+            <dd>@Html.DisplayFor(model => model.NickName)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.StatusTitle)</dt>
+            <dd>@Html.DisplayFor(model => model.StatusTitle)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.IdentityProviderTitle)</dt>
+            <dd>@Html.DisplayFor(model => model.IdentityProviderTitle)</dd>
+
+        </dl>
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })@Html.HiddenFor(model => model.PreviousUrl)
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                @*<input type="submit" value="حذف کن" class="btn btn-danger" />*@
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                @if (string.IsNullOrEmpty(Model.PreviousUrl))
+                {
+                    @Html.ActionLink("لیست کاربران ", "Index", null, new { @class = "btn btn-default" })
+                }
+                else
+                {
+                    <a href="@Model.PreviousUrl" class="btn btn-default">لیست مسابقه ها</a>
+                }            </div>
+        }
+    </div>
+</section>

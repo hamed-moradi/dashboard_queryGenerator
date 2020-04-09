@@ -1,0 +1,98 @@
+﻿@using Presentation.Panel.Models;
+@using Presentation.Panel.Helpers;
+@using Asset.Infrastructure.Common;
+@using PagedList;
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "مدیریت مسابقات کلابها پنل مدیریت";
+    var entries = ViewBag.OnePageOfEntries as StaticPagedList<Match2ClubViewModel>;
+    var searchModel = ViewBag.SearchModel as Match2ClubViewModel;
+}
+
+<section class="content">
+    <div class="row floatBox">
+        <div class="col-md-6 col-xs-12">
+        </div>
+        <div class="col-md-6 col-xs-12">
+            @Html.ActionLink("تعریف مسابقه کلاب جدید", "Create", null, new { @class = "btn btn-primary pull-left" })
+        </div>
+    </div>
+    <br /><br />
+    <div class="box box-default collapsed-box" id="AdvancedSearchBox">
+        <div class="box-header with-border">
+            <h3 class="box-title">جستجوی پیشرفته</h3>
+            <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+            </div>
+        </div>
+        <div class="box-body collapse">
+            @using (Html.BeginForm("Index", "Match2Club", FormMethod.Post, new { id = "AdvancedSearchForm" }))
+            {
+                <input type="hidden" id="ThisPageIndex" name="ThisPageIndex" value="@entries.PageNumber" />
+                <input type="hidden" id="PageOrder" name="PageOrder" value="@searchModel.PageOrder" />
+                <input type="hidden" id="PageOrderBy" name="PageOrderBy" value="@searchModel.PageOrderBy" />
+                @Html.Raw(HtmlHelpers.Instance.MakeSearchForm(searchModel))
+            }
+        </div>
+    </div>
+    <br />
+    <table class="table admins AdvancedGrid">
+        @{
+            var first = new Match2ClubViewModel();
+        }
+        <tr>
+            <th></th>
+            <th>@Html.LabelFor(model => first.MatchTitle)</th>
+            <th>@Html.LabelFor(model => first.HomeClubName)</th>
+            <th>@Html.LabelFor(model => first.HomeClubScore)</th>
+            <th>@Html.LabelFor(model => first.AwayClubName)</th>
+            <th>@Html.DisplayNameFor(model => first.AwayClubScore)</th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in entries)
+        {
+            <tr>
+                <td>
+                    @{
+                        var original = string.IsNullOrWhiteSpace(item.MatchImage) ? "" : item.MatchImage.Trim();
+                        if (string.IsNullOrWhiteSpace(original))
+                        {
+
+                            original = "/Images/no-image.png";
+                        }
+
+                        var src = original + "?w=36&h=36&mode=crop";
+                    }
+                    <a href="@original" target="_blank" title="مشاهده تصویر در ابعاد واقعی">
+                        <img class="avatar-mini" src="@src" width="35" height="35" alt="" />
+                    </a>
+                </td>
+                <td>@Html.DisplayFor(modelItem => item.MatchTitle)</td>
+                <td>@Html.DisplayFor(modelItem => item.HomeClubName)</td>
+                <td>@Html.DisplayFor(modelItem => item.HomeClubScore)</td>
+                <td>@Html.DisplayFor(modelItem => item.AwayClubName)</td>
+                <td>@Html.DisplayFor(modelItem => item.AwayClubScore)</td>
+                <td>
+                    @Html.ActionLink("ویرایش", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("جزئیات", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("ثبت امتیاز", "SetScore", new { Id = item.MatchId })
+                    
+                </td>
+            </tr>
+         }
+    </table>
+    <div class="jsPager">
+        @Html.PagedListPager(entries, page => Url.Action("Index", new { pageIndex = page }))
+    </div>
+    @section cssEnd{
+        @Styles.Render("~/bundles/GridCss")
+    }
+    @section scripts{
+        @Scripts.Render("~/bundles/GridScripts")
+        <script type="text/javascript">
+            $('.AdvancedGrid th label[for*="@searchModel.PageOrderBy"]').parent().addClass('@searchModel.PageOrder.ToLower()');
+        </script>
+    }
+</section>

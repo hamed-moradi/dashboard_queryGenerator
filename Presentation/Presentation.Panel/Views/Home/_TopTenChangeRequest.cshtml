@@ -1,0 +1,32 @@
+﻿@using Presentation.Panel.Models;
+@model IEnumerable<BusinessViewModel>
+<table class="table table-bordered table-hover">
+
+    <tr>
+        <th>نام</th>
+        @*<th>نام خانوادگی</th>*@
+        <th>تاریخ ایجاد</th>
+        <th>نوع</th>
+        <th>جزئیات</th>
+    </tr>
+    @{
+
+        foreach (var item in Model)
+        {
+            string TypeChangedList = ((item.FacilityHasChanged.HasValue && item.FacilityHasChanged.Value) ? "سرویس":string.Empty);
+            TypeChangedList += ((item.EntityHasChanged.HasValue && item.EntityHasChanged.Value) ? "-پروفایل" : string.Empty);
+            TypeChangedList += ((item.CategoryHasChanged.HasValue && item.CategoryHasChanged.Value) ? "-دسته بندی" : string.Empty);
+            TypeChangedList += (item.PendingAttachmentsCount > 0 ? "-عکس" : string.Empty);
+            TypeChangedList += (item.PendingEvidenceCount > 0 ? "-مستندات" : string.Empty);
+            <tr>
+                <td>@item.Title</td>
+                @*<td>@item.CustomerLastName</td>*@
+                <td>@item.CreatedAt</td>
+                <td>@TypeChangedList</td>
+                <td>@Html.ActionLink("جزئیات", "Edit", "Business", new { id = item.Id }, null)</td>
+            </tr>
+        }
+    }
+
+</table>
+

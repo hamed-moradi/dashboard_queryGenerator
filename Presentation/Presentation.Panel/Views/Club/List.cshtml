@@ -1,0 +1,35 @@
+﻿
+@using Presentation.Panel.Models;
+@using PagedList;
+@{
+    ViewBag.Title = "کلابها";
+    var entries = ViewBag.OnePageOfEntries as StaticPagedList<ClubViewModel>;
+    var searchModel = ViewBag.SearchModel as ClubViewModel;
+}
+
+<section class="content">
+    <div class="row floatBox">
+        <div class="col-md-6 col-xs-12"></div>
+        <div class="col-md-6 col-xs-12">
+            @Html.ActionLink("تعریف کلاب جدید", "Create", null, new { @class = "btn btn-primary pull-left" })
+        </div>
+    </div>
+    <br />
+    @Html.Partial("_AdvancedSearchBoxAjax", searchModel)
+    <div id="GridAndPaging">
+        @Html.Partial("_ClubGrid", entries)
+    </div>
+
+    @section cssEnd{
+        @Styles.Render("~/bundles/GridCss")
+        
+        
+    }
+    @section scripts{
+        @Scripts.Render("~/bundles/GridScripts")
+        <script type="text/javascript">
+
+            $('.AdvancedGrid th label[for*="@searchModel.PageOrderBy"]').parent().addClass('@searchModel.PageOrder.ToLower()');
+        </script>
+    }
+</section>

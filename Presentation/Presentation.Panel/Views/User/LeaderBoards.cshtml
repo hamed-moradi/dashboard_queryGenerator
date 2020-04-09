@@ -1,0 +1,28 @@
+﻿
+@using Presentation.Panel.Models;
+@using PagedList;
+@{
+    ViewBag.Title = "لیدر برد کاربران";
+    var entries = ViewBag.OnePageOfEntries as StaticPagedList<UserLeaderBoardViewModel>;
+    var searchModel = ViewBag.SearchModel as UserLeaderBoardViewModel;
+}
+
+<section class="content">
+    <br />
+    @Html.Partial("_AdvancedSearchBoxAjax", searchModel)
+    <div id="GridAndPaging">
+        @Html.Partial("_UserLeaderBoards", entries)
+    </div>
+
+    @section cssEnd{
+        @Styles.Render("~/bundles/GridCss")
+        
+        
+    }
+    @section scripts{
+        @Scripts.Render("~/bundles/GridScripts")
+        <script type="text/javascript">
+            $('.AdvancedGrid th label[for*="@searchModel.PageOrderBy"]').parent().addClass('@searchModel.PageOrder.ToLower()');
+        </script>
+    }
+</section>

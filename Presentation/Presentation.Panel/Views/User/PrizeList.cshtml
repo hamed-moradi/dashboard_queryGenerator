@@ -1,0 +1,166 @@
+﻿@using Presentation.Panel.Models
+@model List<PrizeInfoViewModel>
+@{
+    ViewBag.Title = "آمار جوایز کاربر";
+    var statistic = ViewBag.Statistic as PrizeStatisticViewModel;
+    var index = 0;
+}
+<br /><br />
+<div class="row">
+    @if (statistic != null)
+    {
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="box box-solid">
+                <div class="box-header with-border">
+                    <i class="fa fa-lg fa-gift"></i>
+                    &nbsp;&nbsp;
+                    <h3 class="box-title">دعوت ها</h3>
+                </div>
+                <div class="box-body">
+                    <p class="text-green">
+                        <strong>
+                            @Html.DisplayNameFor(s => statistic.CurrentInvite):
+                            &nbsp;&nbsp;
+                            @Html.DisplayFor(s => statistic.CurrentInvite)
+                        </strong>
+                    </p>
+                    <p class="text-aqua">
+                        <strong>
+                            @Html.DisplayNameFor(s => statistic.RepeatedInvite):
+                            &nbsp;&nbsp;
+                            @Html.DisplayFor(s => statistic.RepeatedInvite)
+                        </strong>
+                    </p>
+                    <p class="text-light-blue">
+                        <strong>
+                            @Html.DisplayNameFor(s => statistic.InvalidInvite):
+                            &nbsp;&nbsp;
+                            @Html.DisplayFor(s => statistic.InvalidInvite)
+                        </strong>
+                    </p>
+                    <p class="text-green">
+                        <strong>
+                            @Html.DisplayNameFor(s => statistic.CalculatedInvite):
+                            &nbsp;&nbsp;
+                            @Html.DisplayFor(s => statistic.CalculatedInvite)
+                        </strong>
+                    </p>
+                    <p class="text-aqua">
+                        <strong>
+                            @Html.DisplayNameFor(s => statistic.TotalInvite):
+                            &nbsp;&nbsp;
+                            @Html.DisplayFor(s => statistic.TotalInvite)
+                        </strong>
+                    </p>
+                    <p class="text-light-blue">
+                        <strong>
+                            @Html.DisplayNameFor(s => statistic.WithoutPaid):
+                            &nbsp;&nbsp;
+                            @Html.DisplayFor(s => statistic.WithoutPaid)
+                        </strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@if (Model != null && Model.Any())
+{
+    if (Model.First().Filter == 0)
+    {
+        index++;
+        <h3 class="margin-bottom text-center">جایزه بعدی</h3>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>@Html.DisplayNameFor(s => Model.First().Id)</th>
+                    <th>@Html.DisplayNameFor(s => Model.First().Title)</th>
+                    <th>@Html.DisplayNameFor(s => Model.First().Description)</th>
+                    <th>@Html.DisplayNameFor(s => Model.First().StepNo)</th>
+                    <th>@Html.DisplayNameFor(s => Model.First().UserCountCondition)</th>
+                    <th>@Html.DisplayNameFor(s => Model.First().EquivalentRial)</th>
+                    <th>@Html.DisplayNameFor(s => Model.First().Award)</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayFor(s => Model.First().Id)</td>
+                    <td>@Html.DisplayFor(s => Model.First().Title)</td>
+                    <td>@Html.DisplayFor(s => Model.First().Description)</td>
+                    <td>@Html.DisplayFor(s => Model.First().StepNo)</td>
+                    <td>@Html.DisplayFor(s => Model.First().UserCountCondition)</td>
+                    <td>@Model.First().EquivalentRial.GetValueOrDefault(0).ToString("n0")</td>
+                    <td>@Html.DisplayFor(s => Model.First().Award)</td>
+                </tr>
+            </tbody>
+        </table>
+    }
+    if (index < Model.Count)
+    {
+        var sample = new PrizeInfoViewModel();
+        <h3 class="margin-bottom text-center" style="margin-top:70px">اطلاعات جوایز</h3>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>@Html.DisplayNameFor(s => sample.Id)</th>
+                    <th>@Html.DisplayNameFor(s => sample.Title)</th>
+                    <th>@Html.DisplayNameFor(s => sample.CheckoutDate)</th>
+                    <th>@Html.DisplayNameFor(s => sample.Description)</th>
+                    <th>@Html.DisplayNameFor(s => sample.StepNo)</th>
+                    <th>@Html.DisplayNameFor(s => sample.UserCountCondition)</th>
+                    <th>@Html.DisplayNameFor(s => sample.EquivalentRial)</th>
+                    <th>@Html.DisplayNameFor(s => sample.Award)</th>
+                    <th>@Html.DisplayNameFor(s => sample.ViewCount)</th>
+                    <th>@Html.DisplayNameFor(s => sample.UserSentCount)</th>
+                    <th></th>
+                </tr>
+                @for (; index < Model.Count; index++)
+                {
+                    var item = Model[index];
+                    <tr>
+                        <td>@Html.DisplayFor(s => item.Id)</td>
+                        <td>@Html.DisplayFor(s => item.Title)</td>
+                        <td>@Html.DisplayFor(s => item.CheckoutDate)</td>
+                        <td>@Html.DisplayFor(s => item.Description)</td>
+                        <td>@Html.DisplayFor(s => item.StepNo)</td>
+                        <td>@Html.DisplayFor(s => item.UserCountCondition)</td>
+                        <td>@item.EquivalentRial.GetValueOrDefault(0).ToString("n0")</td>
+                        <td>@Html.DisplayFor(s => item.Award)</td>
+                        <td>@Html.Raw(item.ViewCount ?? 0)</td>
+                        <td>@(item.UserSentCount ?? 0)</td>
+                        <td><input class="btn btn-link" type="button" value="ارسال مجدد" onclick="resendSms('@item.CheckoutId');" /></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    }
+}
+
+@section scripts{
+    <script type="text/javascript">
+        function resendSms(checkoutId) {
+            $.ajax({
+                data: JSON.stringify({ checkoutId: checkoutId, phone: '@ViewBag.Phone' }),
+                dataType: 'json',
+                method: 'post',
+                type: 'post',
+                url: '/User/ResendPin',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data, textStatus, jqXHR) {
+                    if (data != null && (data == true || data === 'true')) {
+                        location.reload();
+                    }
+                    else {
+                        alert(data);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                },
+                complete: function (jqXHR, textStatus) {
+                }
+            });
+        }
+    </script>
+}

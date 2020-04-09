@@ -1,0 +1,386 @@
+﻿@using Presentation.Panel.Models;
+@{
+    ViewBag.Title = "خانه";
+}
+
+<section class="content">
+
+    @*<div class="row">
+        <div class="col-md-12">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">داشبورد</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box box-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon" style="padding:unset">
+                                        <button id="SearchTel" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                    </div>
+                                    <input type="text" id="TelProvider" class="form-control" placeholder="شماره تلفن سرویس دهنده را وارد کنید" data-inputmask='"mask": "(9999) 999-9999"' data-mask>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon" style="padding:unset">
+                                        <button id="SearchTitle" class="btn btn-default"> <i class="fa fa-search"></i></button>
+                                    </div>
+                                    <input type="text" id="BusinessTitle" class="form-control" placeholder="نام کسب و کار را وارد کنید" data-inputmask='"mask": "(9999) 999-9999"' data-mask>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <!-- User New Request Table -->
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">درخواست های جدید کاربر</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body" style="" id="TopTenRequest">
+                    <div class="chart">
+                        <canvas id="areaChart" style="height: 250px; width: 787px;" width="787" height="250"></canvas>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <button id="SearchAllRequest" target="_blank" class="btn btn-info btn-lg">مشاهده همه درخواست ها</button>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+            <!-- Dounat Business Pictures Chart -->
+            <div class="box box-danger">
+                <div class="box-header with-border">
+                    <h3 class="box-title">کسب و کارهای دارای تصویر</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body" style="width:100%">
+                    <canvas id="business-images-chart"></canvas>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col (LEFT) -->
+        <div class="col-md-6">
+            <!-- New Change Request Table -->
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">درخواست های تغییر جدید</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body" style="" id="TopTenChangeRequest">
+                </div>
+                <div class="box-footer">
+                    <button id="SearchAllChangeRequest" target="_blank" class="btn btn-info btn-lg">مشاهده همه درخواست های تغییر</button>
+
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+            <!-- Buisness Evidence Chart -->
+            <div class="box box-danger">
+                <div class="box-header with-border">
+                    <h3 class="box-title">نمودار وضعیت کسب و کارها</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body" style="width:100%">
+                    <canvas id="business-evidence-chart"></canvas>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col (RIGHT) -->
+    </div>
+
+    <!-- Buisness Status Chart -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-danger">
+                <div class="box-header with-border">
+                    <h3 class="box-title">اطلاعات کلی کسب و کارها</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box box-body" style="width:70%; float:left;">
+                    <canvas id="business-status-chart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+</section>
+
+@section scripts{
+
+    @*<script src="~/plugins/chartjs/Chart.bundle.js"></script>
+    <script src="~/plugins/chartjs/utils.js"></script>*@
+
+    <script>
+        window.onload = function () {};
+    </script>
+
+    @*<script>
+        $(document).ready(function () {
+
+        function GetTopTenRequest() {
+            $.ajax({
+                url: '@Url.Action("TopTenRequest","Home")',
+                method: "Post",
+                success: function (data, status, XmlHttpRequest) {
+                    $("#TopTenRequest").html(data);
+                }
+            });
+        }
+
+        function GetTopTenChangeRequest() {
+            $.ajax({
+                url: '@Url.Action("TopTenChangeRequest","Home")',
+                method: "Post",
+                success: function (data, status, XmlHttpRequest) {
+                    $("#TopTenChangeRequest").html(data);
+                }
+            });
+        }
+
+        function GetChartData() {
+            $.ajax({
+                url: '@Url.Action("ChartData", "Home")',
+                method: "Post",
+                dataType: "json",
+                success: function (data, status, XmlHttpRequest) {
+
+                    var jData = JSON.parse(data.data);
+                    console.log(jData);
+
+                    var businessImageConfig = {
+                        type: 'pie',
+                        data: {
+                            datasets: [{
+                                data: [
+                                    jData.BusinessCount,
+                                    jData.BusinessAtachmentCount,
+                                ],
+                                backgroundColor: [
+                                    window.chartColors.red,
+                                    window.chartColors.orange,
+                                ]
+                            }],
+                            labels: [
+                                'تعداد کسب و کارهای بدون تصویر',
+                                'تعداد کسب و کارهای داری تصویر',
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            legend: {
+                                position: 'top',
+                            },
+                            title: {
+                                display: true,
+                            },
+                            animation: {
+                                animateScale: true,
+                                animateRotate: true
+                            }
+                        }
+                    };
+
+                    var businessEvidenceConfig = {
+                        type: 'bar',
+                        data: {
+                        labels: ['مدرک تایید شده و خارج از دسترس', 'در دسترس و فاقد مدارم تایید شده', 'در دسترس و غیر فعال'],
+                        datasets: [{
+                            label: '',
+                            backgroundColor: window.chartColors.red,
+                            data: [
+                                jData.BuisnessChartData1,
+                                jData.BuisnessChartData2,
+                                jData.BuisnessChartData3
+                                ]
+                            }]
+                        },
+                        options: {
+                            title: {
+                                display: true,
+                            },
+                            tooltips: {
+                                mode: 'index',
+                                intersect: false
+                            },
+                            responsive: true,
+                            scales: {
+                                xAxes: [{
+                                    stacked: true,
+                                }],
+                                yAxes: [{
+                                    stacked: true
+                                }]
+                            }
+                        }
+                    };
+
+                    var businessSatusConfig = {
+                        type: 'bar',
+                        data: {
+                        labels: ['کسب و کارهای جدید', 'مدارک جدید', 'کسب و کارهای در دسترس'],
+                        datasets: [{
+                            label: '',
+                            backgroundColor: window.chartColors.red,
+                            data: [
+                                jData.LatestBusiness,
+                                jData.LatestEdivence,
+                                jData.AvailableBusiness
+                                ]
+                            }]
+                        },
+                        options: {
+                            title: {
+                                display: true,
+                            },
+                            tooltips: {
+                                mode: 'index',
+                                intersect: false
+                            },
+                            responsive: true,
+                            scales: {
+                                xAxes: [{
+                                    stacked: true,
+                                }],
+                                yAxes: [{
+                                    stacked: true
+                                }]
+                            }
+                        }
+                    };
+
+                    window.myDoughnut = new Chart(document.getElementById('business-images-chart').getContext('2d'), businessImageConfig);
+                    window.myBar = new Chart(document.getElementById('business-evidence-chart').getContext('2d'), businessEvidenceConfig);
+                    window.myBar1 = new Chart(document.getElementById('business-status-chart').getContext('2d'), businessSatusConfig);
+                }
+            });
+        }
+
+        GetChartData();
+        GetTopTenRequest();
+        GetTopTenChangeRequest();
+
+         $("#TelProvider").keypress(function (event) {
+
+                if (event.keyCode == 13) {
+                    var telProvider = this.value;
+                    if (telProvider.length > 0) {
+                        $("#SearchTel i").replaceWith("<i class='fa fa-spinner fa-spin'></i>");
+                        GetListByTel(telProvider);
+                    }
+                }
+            });
+            $("#SearchTel").click(function () {
+
+                var telProvider = $("#TelProvider").val();
+                if (telProvider.length > 0) {
+                    $("#SearchTel i").replaceWith("<i class='fa fa-spinner fa-spin'></i>");
+                    GetListByTel(telProvider);
+                }
+            });
+            function GetListByTel(telProvider) {
+                $.ajax({
+                    url: "/Provider/Index",
+                    data: ({ CellPhone: telProvider }),
+                    method: "Post",
+                    success: function (data, status, XmlHttpRequest) {
+                        $(".wrapper").html(data);
+                    }
+
+                });
+            }
+            function GetListByTitle(BusinessTitle) {
+                $.ajax({
+                    url: "/Business/Index",
+                    data: ({ Title: BusinessTitle }),
+                    method: "Post",
+                    success: function (data, status, XmlHttpRequest) {
+                        $(".wrapper").html(data);
+                    }
+                });
+            }
+            $("#BusinessTitle").keypress(function (event) {
+                if (event.keyCode == 13) {
+                    var BusinessTitle = this.value;
+                    if (BusinessTitle.length > 0) {
+                        $("#SearchTitle i").replaceWith("<i class='fa fa-spinner fa-spin'></i>");
+                        GetListByTitle(BusinessTitle);
+                    }
+                }
+            });
+            $("#SearchTitle").click(function () {
+                var BusinessTitle = $("#BusinessTitle").val();
+                if (BusinessTitle.length > 0) {
+                    $("#SearchTitle i").replaceWith("<i class='fa fa-spinner fa-spin'></i>");
+                    GetListByTitle(BusinessTitle);
+                }
+            });
+            $("#SearchAllRequest").click(function () {
+                $("#SearchAllRequest").append("<i class='fa fa-spinner fa-spin'></i>");
+                $.ajax({
+                    url: "/FacilityRequest/Index",
+                    //data: ({}),
+                    method: "Get",
+                    success: function (data, status, XmlHttpRequest) {
+                        $(".wrapper").html(data);
+                    }
+                });
+            });
+            $("#SearchAllChangeRequest").click(function () {
+                $("#SearchAllChangeRequest").append("<i class='fa fa-spinner fa-spin'></i>");
+                $.ajax({
+                    url: '@Url.Action("Index","Business")',
+                    method: "POST",
+                    data: ({ ChangeRequest:'@EditStatus.Active'}),
+                    success: function (data, status, XmlHttpRequest) {
+                        $(".wrapper").html(data);
+                    }
+                });
+            });
+        });
+    </script>*@
+}

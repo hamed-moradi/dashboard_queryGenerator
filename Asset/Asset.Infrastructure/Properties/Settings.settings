@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Asset.Infrastructure.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Assets_Common_ir_sms_ip_SendReceive" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://ip.sms.ir/ws/SendReceive.asmx</Value>
+    </Setting>
+    <Setting Name="Asset_Infrastructure_com_candoosms_panel_SMS_API" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://my.candoosms.com/services/index.php</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

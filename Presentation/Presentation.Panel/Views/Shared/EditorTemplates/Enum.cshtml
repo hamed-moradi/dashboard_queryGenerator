@@ -1,0 +1,15 @@
+﻿@using Presentation.Panel.Helpers;
+@model Enum
+
+@{
+
+    var values = Enum.GetValues(ViewData.ModelMetadata.ModelType).Cast<object>()
+        .Select(v => new SelectListItem
+        {
+            Selected = v.Equals(Model),
+            Text = @HtmlHelpers.Instance.GetDisplayName(v),
+            Value = v.ToString()
+        });
+}
+
+@Html.DropDownList("", values, new { @class = "form-control" })

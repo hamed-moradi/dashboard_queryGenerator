@@ -1,0 +1,98 @@
+﻿@using Presentation.Panel.Models;
+@using Presentation.Panel.Helpers;
+@using Asset.Infrastructure.Common;
+
+@model ClubViewModel
+
+@{
+    ViewBag.Title = "مشخصات کلاب";
+    if (Model != null)
+    {
+        ViewBag.Title = "مشخصات «" + Model.Name;
+    }
+}
+    <section class="content">
+        <hr />
+        <div>
+            <dl class="dl-horizontal">
+
+                <dt>
+                    @{
+                        var original = string.IsNullOrWhiteSpace(Model.Image) ? "" : Model.Image.Trim();
+                        if (string.IsNullOrWhiteSpace(original))
+                        {
+                            original = "/Images/no-image.png";
+                        }
+                        var src = original + "?w=80&h=80&mode=crop";
+                    }
+                    <a href="@original" target="_blank" title="مشاهده تصویر در ابعاد واقعی">
+                        <img class="avatar-mini" src="@src" width="80" height="80" alt="" />
+                    </a>
+                    <br /><br />
+                </dt>
+
+                <dd>
+
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Abbreviation)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Abbreviation)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Description)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Description)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.EventTitle)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.EventTitle)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.StatusTitle)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.StatusTitle)
+                </dd>
+
+            </dl>
+
+            <div class="form-actions no-color">
+                @using (Html.BeginForm())
+            {
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })@Html.HiddenFor(model => model.PreviousUrl)@Html.HiddenFor(model => model.PreviousUrl)
+                    @Html.AntiForgeryToken()
+                    <input type="submit" value="حذف کن" class="btn btn-danger" />
+
+                    @Html.Raw("&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;")
+                    @if (string.IsNullOrEmpty(Model.PreviousUrl))
+                    {
+                        @Html.ActionLink("لیست کلاب ها", "Index", null, new { @class = "btn btn-default" })
+                    }
+                    else
+                    {
+                        <a href="@Model.PreviousUrl" class="btn btn-default">لیست مسابقه ها</a>
+                    }                }
+            </div>
+        </div>
+    </section>

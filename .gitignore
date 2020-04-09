@@ -3,3 +3,17 @@
 ################################################################################
 
 /.vs
+/Asset/Asset.Infrastructure/bin
+/Asset/Asset.Infrastructure/obj
+/Domain/Domain.Application/bin
+/Domain/Domain.Application/obj
+/Domain/Domain.Model/bin
+/Domain/Domain.Model/obj
+/packages
+/Presentation/Presentation.Panel/Logs
+/Presentation/Presentation.Panel/LogFiles
+/Presentation/Presentation.Panel/imagecache
+/Presentation/Presentation.Panel/bin
+/Presentation/Presentation.Panel/obj
+/Test/Test.Logic/obj
+/Test/Test.Logic/bin/Debug

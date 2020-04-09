@@ -1,0 +1,163 @@
+﻿@using Presentation.Panel.Models;
+@using Presentation.Panel.Helpers;
+@using Asset.Infrastructure.Common;
+
+@model Match2ClubViewModel
+
+@{
+    ViewBag.Title = "ویرایش کلاب-مسابقه";
+    var defaultMatchId = Model.MatchId ?? 0;
+    var defaultHomeClubId = Model.HomeClubId ?? 0;
+    var defaultAwayClubId = Model.AwayClubId ?? 0;
+
+    var lstEvents = ViewBag.EventsList as SelectList;
+    var selectedItem = Model != null ? lstEvents.FirstOrDefault(i => i.Value == Model.EventId.ToString())?.Text ?? "--- جستجو کنید ---" : "--- جستجو کنید ---";
+}
+
+<section class="content">
+    <hr />
+
+    @using (Html.BeginForm("Edit", "Match2Club", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })@Html.HiddenFor(model => model.PreviousUrl)
+            @Html.HiddenFor(model => model.Id)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.EventId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-5">
+                    @Html.DropDownListFor(model => model.EventId, (SelectList)ViewBag.EventsList, "-- رویداد --", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.EventId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.MatchId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-5">
+                    <select id="MatchId" name="MatchId" class="form-control" dir="rtl"></select>
+                    @Html.ValidationMessageFor(model => model.MatchId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.HomeClubId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-5">
+                    <select id="HomeClubId" name="HomeClubId" class="form-control" dir="rtl"></select>
+                    @Html.ValidationMessageFor(model => model.HomeClubId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.AwayClubId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-5">
+                    <select id="AwayClubId" name="AwayClubId" class="form-control" dir="rtl"></select>
+                    @Html.ValidationMessageFor(model => model.AwayClubId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="ذخیره تغییرات" class="btn btn-primary" />
+                    @Html.Raw("&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;")
+                    @Html.ActionLink("لیست کلاب-مسابقه ها", "Index", null, new { @class = "btn btn-default" })
+                </div>
+            </div>
+        </div>
+    }
+</section>
+@section cssBegin {
+    <link href="~/Styles/select2.min.css" rel="stylesheet" />
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/select2.full.min.js"></script>
+
+    <script type="text/javascript">
+        if ($('#EventId').val() != null && $('#EventId').val() != '') {
+            let eventId = $('#EventId').val();
+            FillDropDownsByEventId(parseInt(eventId));
+        }
+
+        InitializeObjectDrp('#EventId', '/Event/DropDown', "@selectedItem", "@(Model==null?-1:Model.EventId.GetValueOrDefault(-1))");
+
+        $(function () {
+            $('#EventId').change(function () {
+                var selectedItem = $(this).val();
+                if (selectedItem != null && selectedItem != '') {
+                    FillDropDownsByEventId(selectedItem);
+                }
+            })
+        });
+
+        function FillDropDownsByEventId(eventId) {
+            $.ajax({
+                url: '/Match/GetMatcheshByEventId',
+                type: 'POST',
+                dataType: 'json',
+                data: { 'eventId': eventId },
+                success: function (response) {
+                    if (response.status == 200) {
+                        if (response.data != null) {
+                            var mId = @defaultMatchId;
+                            $('#MatchId').html('');
+                            for (var i = 0; i < response.data.length; i++) {
+                                if (mId == response.data[i].id) {
+                                    $('#MatchId').append('<option value="' + response.data[i].id + '" selected>' + response.data[i].name + '</option>');
+                                }
+                                else {
+                                    $('#MatchId').append('<option value="' + response.data[i].id + '">' + response.data[i].name + '</option>');
+                                }
+                            }
+                        }
+                    } else {
+                        alert(data.message);
+                    }
+                },
+                error: function (data) {
+
+                }
+            });
+
+            $.ajax({
+                url: '/Club/GetClubsByEventId',
+                type: 'POST',
+                dataType: 'json',
+                data: { 'eventId': eventId },
+                success: function (response) {
+                    if (response.status == 200) {
+                        if (response.data != null) {
+                            var hClubId = @defaultHomeClubId;
+                            $('#HomeClubId').html('');
+                            for (var i = 0; i < response.data.length; i++) {
+                                if (hClubId == response.data[i].id) {
+                                    $('#HomeClubId').append('<option value="' + response.data[i].id + '" selected>' + response.data[i].name + '</option>');
+                                }
+                                else {
+                                    $('#HomeClubId').append('<option value="' + response.data[i].id + '">' + response.data[i].name + '</option>');
+                                }
+                            }
+
+                            var aClubId = @defaultAwayClubId;
+                            $('#AwayClubId').html('');
+                            for (var i = 0; i < response.data.length; i++) {
+                                if (aClubId == response.data[i].id) {
+                                    $('#AwayClubId').append('<option value="' + response.data[i].id + '" selected>' + response.data[i].name + '</option>');
+                                } else {
+                                    $('#AwayClubId').append('<option value="' + response.data[i].id + '">' + response.data[i].name + '</option>');
+                                }
+                            }
+                        }
+                    } else {
+                        alert(data.message);
+                    }
+                },
+                error: function (data) {
+
+                }
+            });
+        }
+    </script>
+}

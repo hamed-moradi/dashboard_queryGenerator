@@ -1,0 +1,70 @@
+﻿@using Presentation.Panel.Models;
+
+@model BaseViewModel
+@{
+    var controllerName = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString();
+    controllerName = controllerName.ToLower() == "content" ? controllerName = "contentlist" : controllerName;
+    string postAction = ViewBag.PostAction ?? "List";
+}
+
+<script>
+        $(document).ready(function () {
+            // submit form on enter
+            $('form#AdvancedSearchForm').keypress(function (e) {
+                var key = e.which;
+                if (key == 13) {
+                    // As ASCII code for ENTER key is "13"
+                    $('form#AdvancedSearchForm').submit(); // Submit form code
+                }
+            });
+
+            // prevent submit AdvancedSearchForm and send ajax request
+            $(document).on('submit', "#AdvancedSearchForm", function (e) {
+                $.loadingBlockShow();
+                var url = "/@controllerName/@postAction";
+                $.ajax({
+                    //async: false,
+                    type: "POST",
+                    url: url,
+                    data: $("#AdvancedSearchForm").serialize(),
+                    success: function (data) {
+                        $("div#GridAndPaging").html(data);
+                        $.loadingBlockHide();
+                        $('.AdvancedGrid th label[for*="' + $('#PageOrderBy').val() + '"]').parent().addClass($('#PageOrder').val().toLowerCase());
+                    }
+                });
+
+                e.preventDefault();
+            });
+        });
+</script>
+
+<div class="box box-default collapsed-box" id="AdvancedSearchBox">
+    <div class="box-header with-border">
+        <h3 class="box-title">جستجوی پیشرفته</h3>
+        <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+        </div>
+    </div>
+
+
+    <div id="advance-search-collapse" class="box-body collapse">
+        <div id="advance-search-form-container">
+
+            @using (Html.BeginForm(postAction, controllerName, FormMethod.Post, new { id = "AdvancedSearchForm" }))
+            {
+                    <input type="hidden" id="ThisPageIndex" name="ThisPageIndex" value="@Model.ThisPageIndex" />
+                    <input type="hidden" id="PageOrder" name="PageOrder" value="@Model.PageOrder" />
+                    <input type="hidden" id="PageOrderBy" name="PageOrderBy" value="@Model.PageOrderBy" />
+                    <input type="hidden" id="ThisPageSize" name="ThisPageSize" value="@Model.ThisPageSize" />
+
+                    @Html.Raw(Presentation.Panel.Helpers.HtmlHelpers.Instance.MakeSearchForm(Model))
+            }
+        </div>
+
+        <div style="padding:7px 0 8px;background-color: #eeeeee;">
+            <button onclick='CheckAdvancedSearch()' class='btn btn-primary marginR10'>جستجو <i class='fa fa-filter'></i></button>
+            <button onclick='ResetAdvancedSearchForm()' class='btn btn-danger marginR10'>حذف فیلترها <i class='fa fa-undo'></i></button>
+        </div>
+    </div>
+</div>

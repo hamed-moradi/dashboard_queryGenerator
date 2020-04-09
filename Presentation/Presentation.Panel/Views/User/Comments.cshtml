@@ -1,0 +1,79 @@
+﻿@using Presentation.Panel.Models;
+@using Presentation.Panel.Helpers;
+@using PagedList;
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "مدیریت نظرات";
+    var entries = ViewBag.OnePageOfEntries as StaticPagedList<CommentViewModel>;
+    var searchModel = ViewBag.SearchModel as CommentViewModel;
+}
+
+<section class="content">
+    <br /><br />
+    <div class="box box-default collapsed-box" id="AdvancedSearchBox">
+        <div class="box-header with-border">
+            <h3 class="box-title">جستجوی پیشرفته</h3>
+            <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+            </div>
+        </div>
+        <div class="box-body collapse">
+            @using (Html.BeginForm("Comments", "User", FormMethod.Post, new { id = "AdvancedSearchForm" }))
+            {
+                <input type="hidden" name="UserCreatorId" value="@ViewBag.UserId" />
+                <input type="hidden" id="ThisPageIndex" name="ThisPageIndex" value="@entries.PageNumber" />
+                <input type="hidden" id="PageOrder" name="PageOrder" value="@searchModel.PageOrder" />
+                <input type="hidden" id="PageOrderBy" name="PageOrderBy" value="@searchModel.PageOrderBy" />
+                @Html.Raw(HtmlHelpers.Instance.MakeSearchForm(searchModel))
+            }
+        </div>
+    </div>
+    <br />
+    <table class="table admins AdvancedGrid">
+        @{
+            var first = new CommentViewModel();
+        }
+        <tr>
+            <th>@Html.DisplayNameFor(model => first.BusinessTitle)</th>
+            <th>@Html.DisplayNameFor(model => first.ReplyTo)</th>
+            <th>@Html.DisplayNameFor(model => first.IP)</th>
+            <th>@Html.DisplayNameFor(model => first.CreatedAt)</th>
+            <th>@Html.DisplayNameFor(model => first.CreatorName)</th>
+            <th>@Html.DisplayNameFor(model => first.StatusTitle)</th>
+        </tr>
+        @foreach (var item in entries)
+        {
+            <tr>
+                <td><a href="/Provider/Details/@item.ProviderId">@item.BusinessTitle</a></td>
+                <td>
+                    @if (item.ReplyTo != null)
+                    {
+                        <a href="/Comment/Details/@item.ReplyTo">@Html.DisplayNameFor(model => item.ReplyTo)</a>
+                    }
+                </td>
+                <td>@Html.DisplayFor(modelItem => item.IP)</td>
+                <td>@Html.DisplayFor(modelItem => item.CreatedAt)</td>
+                <td>
+                    @if (item.CreatorId != null)
+                    {
+                        <a href="/Admin/Details/@item.CreatorId">@item.CreatorName</a>
+                    }
+                </td>
+                <td>@Html.DisplayFor(modelItem => item.StatusTitle)</td>
+            </tr>
+        }
+    </table>
+    <div class="jsPager">
+        @Html.PagedListPager(entries, page => Url.Action("Comments", new { pageIndex = page }))
+    </div>
+    @section cssEnd{
+        @Styles.Render("~/bundles/GridCss")
+    }
+    @section scripts{
+        @Scripts.Render("~/bundles/GridScripts")
+        <script>
+            $('.AdvancedGrid th label[for*="@searchModel.PageOrderBy"]').parent().addClass('@searchModel.PageOrder.ToLower()');
+        </script>
+    }
+</section>

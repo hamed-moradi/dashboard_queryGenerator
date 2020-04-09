@@ -1,0 +1,124 @@
+﻿@using Presentation.Panel.Models;
+@using Presentation.Panel.Helpers;
+@using PagedList;
+@using PagedList.Mvc;
+@model IList<AppSettingViewModel>
+
+@{
+    ViewBag.Title = "تنظیمات";
+    //var entries = ViewBag.Enteries;
+    var groups = ViewBag.Groups as List<AppSettingGroupViewModel>;
+    var settingGroup = ViewBag.Setting2Group as List<AppSetting2AppSettingGroupViewModel>;
+    var searchModel = ViewBag.SearchModel as AppSettingViewModel;
+}
+
+<section class="content">
+    <br /><br />
+    <div class="box box-default collapsed-box" id="AdvancedSearchBox">
+        <div class="box-header with-border">
+            <h3 class="box-title">جستجوی پیشرفته</h3>
+            <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+            </div>
+        </div>
+        <div class="box-body collapse">
+            @using (Html.BeginForm("Index", "AppSetting", FormMethod.Post, new { id = "AdvancedSearchForm" }))
+            {
+                @Html.Raw(HtmlHelpers.Instance.MakeSearchForm(searchModel))
+            }
+        </div>
+    </div>
+    <br />
+    <div class="form-horizontal">
+        @if (groups != null)
+        {
+            //var parents = groups.Where(m => m.ParentId == null).ToList();
+            foreach (var group in groups)
+            {
+                //var childrenId = children.Select(s => s.Id).ToList();
+
+                var keys = settingGroup.Where(w => w.AppSettingGroupId == group.Id).Select(s => s.AppSettingKey).ToList();
+                var appSettings = Model.Where(w => keys.Exists(k => k.Equals(w.Key))).ToList();
+
+                if (appSettings.Count != 0 )
+                {
+                    var children = groups.Where(m => m.Id == group.ParentId).ToList();
+                    <div class="box box-default">
+                        <div class="box-header with-border">
+                            <label>
+                                @group.Title
+                                <span class="@group.Icon"> </span>
+                            </label>
+                            @{
+                                if (children != null)
+                                {
+                                    foreach (var child in children)
+                                    {
+                                        <label>
+                                            >
+                                            @child.Title
+                                            <span class="@child.Icon"> </span>
+                                        </label>
+                                        @Html.Raw("&nbsp;&nbsp;")
+                                    }
+                                }
+                            }
+                            <div class="box-tools pull-right">
+                                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <table class="table admins AdvancedGrid">
+                                @{
+                                    var first = new AppSettingViewModel();
+                                }
+                                <tr>
+                                    <th>@Html.DisplayNameFor(model => first.Title)</th>
+                                    <th>@Html.DisplayNameFor(model => first.Value)</th>
+                                    <th>@Html.DisplayNameFor(model => first.Description)</th>
+                                    <th>@Html.DisplayNameFor(model => first.Priority)</th>
+                                    <th></th>
+                                </tr>
+                                @foreach (var item in appSettings)
+                                {
+                                    <tr>
+                                        <td>
+                                            @{
+                                                var src = string.IsNullOrWhiteSpace(item?.Icon) ? "/Images/no-image.png" : item.Icon.Trim();
+                                            }
+                                            <img src='@src' data-id="RelativePath" width="36" height="36" class="avatar-mini" alt="" />
+                                            @Html.DisplayFor(modelItem => item.Title)
+                                        </td>
+                                        <td>@Html.DisplayFor(modelItem => item.Value)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Priority)</td>
+                                        <td>
+                                            @Html.ActionLink("ویرایش", "Edit", new { key = item.Key }) |
+                                            @Html.ActionLink("جزئیات", "Details", new { key = item.Key })
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+                    </div>
+                }
+            }
+        }
+
+    </div>
+
+    <div class="container">
+
+    </div>
+    @section cssEnd{
+        @Styles.Render("~/bundles/GridCss")
+    }
+    @section scripts{
+        @Scripts.Render("~/bundles/GridScripts")
+
+        <script>
+            $('.AdvancedGrid th label[for*="@searchModel.PageOrderBy"]').parent().addClass('@searchModel.PageOrder.ToLower()');
+            $('[data-toggle="tooltip"]').tooltip()
+        </script>
+    }
+</section>
